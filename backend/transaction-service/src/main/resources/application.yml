@@ -30,6 +30,7 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
+        spring.json.use.type.headers: false
         spring.json.type.mapping: transactionSummary:com.banking.transaction.dto.TransactionSummary
     consumer:
       group-id: transaction-group
@@ -37,6 +38,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: com.banking.transaction.dto
+        spring.json.use.type.headers: false
         spring.json.type.mapping: transactionSummary:com.banking.transaction.dto.TransactionSummary
       auto-offset-reset: earliest
 
