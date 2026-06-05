@@ -49,6 +49,9 @@ import { AccountDetailComponent } from './accounts/account-detail.component';
 // Transaction Components
 import { TransactionsComponent } from './transactions/transactions.component';
 
+// AI Components
+import { AiChatComponent } from './ai/ai-chat.component';
+
 // Core
 import { AuthService } from './core/auth/auth.service';
 import { AuthGuard } from './core/auth/auth.guard';
@@ -63,6 +66,7 @@ import { JwtInterceptor } from './core/auth/jwt.interceptor';
     AccountsComponent,
     AccountDetailComponent,
     TransactionsComponent,
+    AiChatComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # ============ AI Service (FastAPI + Ollama) ============
+
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: banking-ai-service
+    ports:
+      - "8090:8090"
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      OLLAMA_CHAT_MODEL: llama3.2
+      OLLAMA_EMBED_MODEL: nomic-embed-text
+      ACCOUNT_SERVICE_URL: http://host.docker.internal:8083
+      TRANSACTION_SERVICE_URL: http://host.docker.internal:8085
+      CORS_ORIGINS: http://localhost:4200,http://localhost:8080,http://localhost:8090
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - banking-ai-network
+    restart: unless-stopped
+
+networks:
+  banking-ai-network:
+    driver: bridge

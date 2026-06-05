@@ -174,30 +174,28 @@
         <span class="ai-badge">Powered by Ollama</span>
       </div>
       <div class="insights-content">
-        <div class="insight-item">
-          <div class="insight-icon spending">
-            <mat-icon>lightbulb</mat-icon>
-          </div>
-          <div class="insight-text">
-            <p>Your dining expenses increased 23% this month. Consider setting a budget of $350/month.</p>
-          </div>
+        <div class="loading-state" *ngIf="aiInsightsLoading" style="padding: 20px 0;">
+          <div class="spinner"></div>
         </div>
-        <div class="insight-item">
-          <div class="insight-icon savings-icon">
-            <mat-icon>trending_up</mat-icon>
+        <ng-container *ngIf="!aiInsightsLoading">
+          <div class="insight-item" *ngFor="let insight of aiInsights">
+            <div class="insight-icon" [class]="insight.color">
+              <mat-icon>{{ insight.icon }}</mat-icon>
+            </div>
+            <div class="insight-text">
+              <strong>{{ insight.title }}</strong>
+              <p>{{ insight.message }}</p>
+            </div>
           </div>
-          <div class="insight-text">
-            <p>You're on track to save $12,000 by December. Increase your monthly savings by $200 to reach $15,000.</p>
+          <div class="insight-item" *ngIf="aiInsights.length === 0">
+            <div class="insight-icon spending">
+              <mat-icon>lightbulb</mat-icon>
+            </div>
+            <div class="insight-text">
+              <p>AI insights will appear here once the AI service is connected. Make sure Ollama is running and start the AI service.</p>
+            </div>
           </div>
-        </div>
-        <div class="insight-item">
-          <div class="insight-icon invest">
-            <mat-icon>show_chart</mat-icon>
-          </div>
-          <div class="insight-text">
-            <p>Tech sector is performing well. Consider rebalancing your portfolio for optimal returns.</p>
-          </div>
-        </div>
+        </ng-container>
       </div>
     </div>
 

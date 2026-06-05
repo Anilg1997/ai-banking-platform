@@ -62,6 +62,18 @@ spring:
                   replenishRate: 30
                   burstCapacity: 60
 
+        - id: ai-service
+          uri: ${AI_SERVICE_URL:http://localhost:8090}
+          predicates:
+            - Path=/api/ai/**
+          filters:
+            - StripPrefix=0
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter:
+                  replenishRate: 10
+                  burstCapacity: 20
+
   data:
     redis:
       host: ${REDIS_HOST:localhost}

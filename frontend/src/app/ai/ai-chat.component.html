@@ -1,0 +1,99 @@
+<!-- Chat FAB Button -->
+<button class="chat-fab animate-fade-in" (click)="toggleChat()" matTooltip="AI Assistant">
+  <div class="fab-content" *ngIf="!isOpen">
+    <mat-icon class="fab-icon">auto_awesome</mat-icon>
+    <span class="fab-label">AI</span>
+    <span class="unread-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+  </div>
+  <mat-icon *ngIf="isOpen" class="fab-icon close-icon">close</mat-icon>
+</button>
+
+<!-- Chat Window -->
+<div class="chat-window animate-fade-in-up" *ngIf="isOpen" [class.minimized]="isMinimized">
+  <!-- Header -->
+  <div class="chat-header" (click)="isMinimized = !isMinimized">
+    <div class="header-left">
+      <div class="header-avatar">
+        <mat-icon>auto_awesome</mat-icon>
+      </div>
+      <div class="header-info">
+        <span class="header-title">NovaBank AI</span>
+        <span class="header-status">
+          <span class="status-dot"></span>
+          Online
+        </span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="header-btn" (click)="clearChat(); $event.stopPropagation()" matTooltip="Clear chat">
+        <mat-icon>refresh</mat-icon>
+      </button>
+      <button class="header-btn" (click)="isMinimized = !isMinimized; $event.stopPropagation()" matTooltip="Minimize">
+        <mat-icon>remove</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div class="chat-messages" #chatMessages [class.minimized]="isMinimized">
+    <!-- Welcome Card -->
+    <div class="welcome-card" *ngIf="showWelcome">
+      <div class="welcome-icon">
+        <mat-icon>auto_awesome</mat-icon>
+      </div>
+      <h3>NovaBank AI Assistant</h3>
+      <p>Your intelligent banking assistant powered by Ollama (Llama 3.2). Ask me anything about your accounts or banking!</p>
+      <div class="suggestion-chips">
+        <button class="suggestion-chip" (click)="suggestPrompt('What accounts do I have?')">
+          <mat-icon>account_balance</mat-icon> My Accounts
+        </button>
+        <button class="suggestion-chip" (click)="suggestPrompt('Show my recent transactions')">
+          <mat-icon>receipt</mat-icon> Recent Transactions
+        </button>
+        <button class="suggestion-chip" (click)="suggestPrompt('What types of accounts does NovaBank offer?')">
+          <mat-icon>help_outline</mat-icon> Account Types
+        </button>
+        <button class="suggestion-chip" (click)="suggestPrompt('Give me financial tips')">
+          <mat-icon>lightbulb</mat-icon> Tips
+        </button>
+      </div>
+    </div>
+
+    <!-- Message Bubbles -->
+    <div class="message" *ngFor="let msg of messages" [class.user]="msg.role === 'user'" [class.assistant]="msg.role === 'assistant'">
+      <div class="message-avatar" *ngIf="msg.role === 'assistant'">
+        <mat-icon>auto_awesome</mat-icon>
+      </div>
+      <div class="message-bubble">
+        <div class="message-content" [innerHTML]="formatMessage(msg.content)"></div>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="message assistant" *ngIf="isLoading">
+      <div class="message-avatar">
+        <mat-icon>auto_awesome</mat-icon>
+      </div>
+      <div class="message-bubble loading">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input -->
+  <div class="chat-input">
+    <input
+      type="text"
+      [(ngModel)]="currentMessage"
+      (keydown.enter)="sendMessage()"
+      placeholder="Ask me anything about banking..."
+      [disabled]="isLoading"
+      class="input-field"
+    />
+    <button class="send-btn" (click)="sendMessage()" [disabled]="!currentMessage.trim() || isLoading">
+      <mat-icon>{{ isLoading ? 'hourglass_empty' : 'send' }}</mat-icon>
+    </button>
+  </div>
+</div>

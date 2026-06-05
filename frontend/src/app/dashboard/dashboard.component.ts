@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth/auth.service';
 import { AccountService } from '../core/services/account.service';
+import { AiService, Insight } from '../core/services/ai.service';
 import { User } from '../core/models/user.model';
 import { AccountSummary, ACCOUNT_TYPE_LABELS } from '../core/models/account.model';
 
@@ -62,10 +63,13 @@ export class DashboardComponent implements OnInit {
   userAccounts: AccountSummary[] = [];
   totalBankBalance: number = 0;
   accountTypeLabels = ACCOUNT_TYPE_LABELS;
+  aiInsights: Insight[] = [];
+  aiInsightsLoading = false;
 
   constructor(
     private authService: AuthService,
     private accountService: AccountService,
+    private aiService: AiService,
     private router: Router
   ) {}
 
@@ -87,6 +91,20 @@ export class DashboardComponent implements OnInit {
       next: (accounts) => {
         this.userAccounts = accounts;
         this.totalBankBalance = accounts.reduce((sum, a) => sum + a.balance, 0);
+      }
+    });
+    this.loadAiInsights();
+  }
+
+  loadAiInsights(): void {
+    this.aiInsightsLoading = true;
+    this.aiService.getInsights().subscribe({
+      next: (response) => {
+        this.aiInsights = response.insights || [];
+        this.aiInsightsLoading = false;
+      },
+      error: () => {
+        this.aiInsightsLoading = false;
       }
     });
   }
