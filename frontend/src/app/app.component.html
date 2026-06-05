@@ -12,15 +12,43 @@
         <span class="brand-text">Nova<span class="brand-accent">Bank</span></span>
       </div>
       <div class="nav-actions">
-        <button mat-icon-button class="nav-btn" matTooltip="Notifications">
-          <mat-icon class="nav-icon">notifications_outline</mat-icon>
-          <span class="notification-dot"></span>
+        <button mat-icon-button class="nav-btn" matTooltip="Transactions" routerLink="/transactions">
+          <mat-icon class="nav-icon">receipt_long</mat-icon>
         </button>
+        <div class="notification-wrapper">
+          <button mat-icon-button class="nav-btn" (click)="toggleNotifications()" matTooltip="Notifications">
+            <mat-icon class="nav-icon">notifications_outline</mat-icon>
+            <span class="notification-dot" *ngIf="unreadCount > 0">{{ unreadCount > 9 ? '9+' : unreadCount }}</span>
+          </button>
+          <!-- Notification Dropdown -->
+          <div class="notification-dropdown" *ngIf="showNotifications" (click)="$event.stopPropagation()">
+            <div class="dropdown-header">
+              <span class="dropdown-title">Notifications</span>
+              <button class="mark-read-btn" (click)="notificationService.markAllAsRead(authService.currentUser?.id || '').subscribe()">Mark all read</button>
+            </div>
+            <div class="dropdown-body">
+              <div class="notif-item" *ngFor="let notif of notifications.slice(0, 10)" [class.unread]="!notif.read" (click)="notificationService.markAsRead(notif.id).subscribe()">
+                <div class="notif-icon" [style.background]="notificationService.getColor(notif.type) + '22'" [style.color]="notificationService.getColor(notif.type)">
+                  <mat-icon>{{ notificationService.getIcon(notif.type) }}</mat-icon>
+                </div>
+                <div class="notif-content">
+                  <span class="notif-title">{{ notif.title }}</span>
+                  <span class="notif-message">{{ notif.message }}</span>
+                  <span class="notif-time">{{ notificationService.timeAgo(notif.createdAt) }}</span>
+                </div>
+              </div>
+              <div class="notif-empty" *ngIf="notifications.length === 0">
+                <mat-icon>notifications_off</mat-icon>
+                <p>No notifications yet</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <button mat-icon-button class="nav-btn" matTooltip="Settings">
           <mat-icon class="nav-icon">settings_outline</mat-icon>
         </button>
         <button mat-icon-button class="nav-btn nav-avatar" matTooltip="Profile">
-          <span class="avatar-text">JD</span>
+          <span class="avatar-text">{{ getInitials() }}</span>
         </button>
       </div>
     </div>

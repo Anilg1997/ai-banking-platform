@@ -225,6 +225,32 @@ services:
     networks:
       - banking-network
 
+  # ============ Notification Microservice ============
+
+  notification-service:
+    build:
+      context: ./backend
+      dockerfile: notification-service/Dockerfile
+    container_name: banking-notification-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: banking_notifications
+      DB_USER: banking_user
+      DB_PASSWORD: banking_pass_123
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9093
+      JWT_SECRET: ${JWT_SECRET:-dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+    ports:
+      - "8087:8087"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    networks:
+      - banking-network
+
   # ============ Monitoring ============
 
   redis-commander:

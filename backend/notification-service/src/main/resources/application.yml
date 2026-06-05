@@ -1,0 +1,47 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: notification-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:banking_notifications}
+    username: ${DB_USER:banking_user}
+    password: ${DB_PASSWORD:banking_pass_123}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    open-in-view: false
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: notification-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+        spring.json.use.type.headers: false
+      auto-offset-reset: earliest
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    com.banking: DEBUG
+    org.springframework.kafka: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

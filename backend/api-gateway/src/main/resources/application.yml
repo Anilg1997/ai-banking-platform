@@ -74,6 +74,26 @@ spring:
                   replenishRate: 10
                   burstCapacity: 20
 
+        # Notification service stream route must come BEFORE general
+        - id: notification-service-stream
+          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8087}
+          predicates:
+            - Path=/api/notifications/stream/**
+          filters:
+            - StripPrefix=0
+
+        - id: notification-service
+          uri: ${NOTIFICATION_SERVICE_URL:http://localhost:8087}
+          predicates:
+            - Path=/api/notifications/**
+          filters:
+            - StripPrefix=0
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter:
+                  replenishRate: 20
+                  burstCapacity: 40
+
   data:
     redis:
       host: ${REDIS_HOST:localhost}
