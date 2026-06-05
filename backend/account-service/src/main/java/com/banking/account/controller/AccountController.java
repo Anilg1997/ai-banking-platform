@@ -4,6 +4,7 @@ import com.banking.account.dto.AccountRequest;
 import com.banking.account.dto.AccountResponse;
 import com.banking.account.dto.AccountSummary;
 import com.banking.account.model.Account;
+import com.banking.account.model.Account;
 import com.banking.account.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -84,5 +85,25 @@ public class AccountController {
                 "accountCount", accountCount,
                 "userId", userId
         ));
+    }
+
+    @PatchMapping("/{id}/debit")
+    public ResponseEntity<AccountResponse> debitAccount(
+            @PathVariable String id,
+            @RequestBody Map<String, BigDecimal> request) {
+        Account account = accountService.findAccountById(id);
+        account.debit(request.get("amount"));
+        account = accountService.saveAccount(account);
+        return ResponseEntity.ok(AccountResponse.fromAccount(account));
+    }
+
+    @PatchMapping("/{id}/credit")
+    public ResponseEntity<AccountResponse> creditAccount(
+            @PathVariable String id,
+            @RequestBody Map<String, BigDecimal> request) {
+        Account account = accountService.findAccountById(id);
+        account.credit(request.get("amount"));
+        account = accountService.saveAccount(account);
+        return ResponseEntity.ok(AccountResponse.fromAccount(account));
     }
 }

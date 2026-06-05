@@ -134,6 +134,15 @@ public class AccountService {
         return accountRepository.countByUserId(userId);
     }
 
+    public Account findAccountById(String id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Account not found with id: " + id));
+    }
+
+    public Account saveAccount(Account account) {
+        return accountRepository.save(account);
+    }
+
     private String generateAccountNumber() {
         String prefix = "NOVA";
         String timestamp = String.valueOf(System.currentTimeMillis() % 1000000);

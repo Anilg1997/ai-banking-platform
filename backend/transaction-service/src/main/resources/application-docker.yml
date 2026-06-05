@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:postgres}:${DB_PORT:5432}/${DB_NAME:banking_transactions}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
+
+app:
+  services:
+    account-service:
+      url: ${ACCOUNT_SERVICE_URL:http://account-service:8083}
+
+logging:
+  level:
+    com.banking: INFO

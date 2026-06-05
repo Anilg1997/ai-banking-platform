@@ -1,0 +1,142 @@
+<div class="transactions-page animate-fade-in">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <button class="back-btn" routerLink="/dashboard" matTooltip="Back">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-text">
+        <h1 class="page-title">Transactions</h1>
+        <p class="page-subtitle">{{ totalCount }} total transaction{{ totalCount !== 1 ? 's' : '' }}</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn-create" (click)="toggleSendForm()" matTooltip="Send money">
+        <mat-icon>send_money</mat-icon>
+        <span>Send Money</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Send Money Form -->
+  <div class="send-form-card" *ngIf="showSendForm">
+    <div class="card-header">
+      <h3 class="card-title">
+        <mat-icon class="title-icon">send_money</mat-icon>
+        Send Money
+      </h3>
+      <button class="close-btn" (click)="toggleSendForm()"><mat-icon>close</mat-icon></button>
+    </div>
+    <div class="send-form-body">
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label>From Account</label>
+          <select class="form-input" [(ngModel)]="sendForm.fromAccountId">
+            <option *ngFor="let acc of accounts" [value]="acc.id">
+              {{ acc.accountName }} ({{ formatCurrency(acc.availableBalance, acc.currency) }})
+            </option>
+          </select>
+        </div>
+        <div class="form-group flex-1">
+          <label>To Account ID</label>
+          <input class="form-input" [(ngModel)]="sendForm.toAccountId" placeholder="Destination account ID" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label>Amount</label>
+          <input type="number" class="form-input" [(ngModel)]="sendForm.amount" placeholder="0.00" min="0.01" step="0.01" />
+        </div>
+        <div class="form-group flex-1">
+          <label>Currency</label>
+          <select class="form-input" [(ngModel)]="sendForm.currency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label>Description</label>
+          <input class="form-input" [(ngModel)]="sendForm.description" placeholder="What's this for?" />
+        </div>
+        <div class="form-group flex-1">
+          <label>Category</label>
+          <select class="form-input" [(ngModel)]="sendForm.category">
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-cancel" (click)="toggleSendForm()">Cancel</button>
+        <button class="btn-primary" (click)="sendMoney()" [disabled]="isSending || !sendForm.toAccountId || sendForm.amount <= 0">
+          <span *ngIf="!isSending"><mat-icon>check_circle</mat-icon> Send {{ formatCurrency(sendForm.amount, sendForm.currency) }}</span>
+          <span *ngIf="isSending"><span class="spinner-btn"></span> Processing...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="filter-tabs">
+    <button class="filter-btn" [class.active]="selectedFilter === 'all'" (click)="selectedFilter = 'all'">
+      All
+      <span class="filter-count">{{ transactions.length }}</span>
+    </button>
+    <button class="filter-btn" [class.active]="selectedFilter === 'transfer'" (click)="selectedFilter = 'transfer'">
+      Transfers
+    </button>
+    <button class="filter-btn" [class.active]="selectedFilter === 'payment'" (click)="selectedFilter = 'payment'">
+      Payments
+    </button>
+    <button class="filter-btn" [class.active]="selectedFilter === 'deposit'" (click)="selectedFilter = 'deposit'">
+      Deposits
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading transactions...</p>
+  </div>
+
+  <!-- Transaction List -->
+  <div class="transactions-list" *ngIf="!isLoading">
+    <div class="transaction-card animate-slide-in" *ngFor="let txn of filteredTransactions; let i = index" [style.animation-delay]="(i * 0.03) + 's'">
+      <div class="txn-left">
+        <div class="txn-icon" [class]="getDirection(txn)">
+          <mat-icon>{{ transactionTypeIcons[txn.type] }}</mat-icon>
+        </div>
+        <div class="txn-info">
+          <span class="txn-title">{{ txn.description || transactionTypeLabels[txn.type] }}</span>
+          <span class="txn-meta">
+            {{ getDirection(txn) === 'sent' ? 'To: ' + (txn.toAccountName || txn.toAccountNumber) : 'From: ' + (txn.fromAccountName || txn.fromAccountNumber) }}
+            · {{ formatDate(txn.createdAt) }}
+          </span>
+          <span class="txn-ref">Ref: {{ txn.transactionRef }}</span>
+        </div>
+      </div>
+      <div class="txn-right">
+        <span class="txn-amount" [class.negative]="getDirection(txn) === 'sent'">
+          {{ getDirection(txn) === 'sent' ? '-' : '+' }}{{ formatCurrency(txn.amount, txn.currency) }}
+        </span>
+        <span class="txn-status" [class]="getStatusClass(txn.status)">
+          {{ transactionStatusLabels[txn.status] }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredTransactions.length === 0">
+      <div class="empty-icon">
+        <mat-icon>receipt_long</mat-icon>
+      </div>
+      <h3>No Transactions Yet</h3>
+      <p>Your transactions will appear here once you start sending or receiving money.</p>
+      <button class="btn-primary" (click)="toggleSendForm()" style="width:auto;padding:12px 28px!important">
+        <mat-icon>send_money</mat-icon> Send Your First Transfer
+      </button>
+    </div>
+  </div>
+</div>

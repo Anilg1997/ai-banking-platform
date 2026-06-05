@@ -42,6 +42,26 @@ spring:
                   replenishRate: 20
                   burstCapacity: 40
 
+        # SSE stream route must come BEFORE the general route
+        - id: transaction-service-stream
+          uri: ${TRANSACTION_SERVICE_URL:http://localhost:8085}
+          predicates:
+            - Path=/api/transactions/stream/**
+          filters:
+            - StripPrefix=0
+
+        - id: transaction-service
+          uri: ${TRANSACTION_SERVICE_URL:http://localhost:8085}
+          predicates:
+            - Path=/api/transactions/**
+          filters:
+            - StripPrefix=0
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter:
+                  replenishRate: 30
+                  burstCapacity: 60
+
   data:
     redis:
       host: ${REDIS_HOST:localhost}

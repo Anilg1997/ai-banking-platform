@@ -125,6 +125,57 @@ services:
     networks:
       - banking-network
 
+  # ============ Kafka & Zookeeper ============
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1
+    container_name: banking-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - banking-network
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1
+    container_name: banking-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    networks:
+      - banking-network
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:9093
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_INTERNAL://0.0.0.0:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    healthcheck:
+      test: nc -z localhost 9092 || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: banking-kafka-ui
+    ports:
+      - "8086:8080"
+    depends_on:
+      - kafka
+    networks:
+      - banking-network
+    environment:
+      KAFKA_CLUSTERS_0_NAME: banking-local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9093
+
   # ============ Account Microservice ============
 
   account-service:
@@ -142,6 +193,35 @@ services:
     depends_on:
       mongodb:
         condition: service_healthy
+    networks:
+      - banking-network
+
+  # ============ Transaction Microservice ============
+
+  transaction-service:
+    build:
+      context: ./backend
+      dockerfile: transaction-service/Dockerfile
+    container_name: banking-transaction-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: banking_transactions
+      DB_USER: banking_user
+      DB_PASSWORD: banking_pass_123
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9093
+      ACCOUNT_SERVICE_URL: http://account-service:8083
+      JWT_SECRET: ${JWT_SECRET:-dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+    ports:
+      - "8085:8085"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+      account-service:
+        condition: service_started
     networks:
       - banking-network
 
