@@ -1,0 +1,11 @@
+**/target/
+**/build/
+.git
+.gitignore
+.idea/
+*.iml
+.vscode/
+*.log
+.DS_Store
+**/node_modules/
+**/.gradle/

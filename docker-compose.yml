@@ -185,8 +185,7 @@ services:
     container_name: banking-account-service
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      MONGODB_HOST: mongodb
-      MONGODB_PORT: 27017
+      MONGODB_URI: mongodb://mongodb:27017/banking_accounts
       JWT_SECRET: ${JWT_SECRET:-dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
     ports:
       - "8083:8083"

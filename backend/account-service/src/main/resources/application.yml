@@ -9,12 +9,6 @@ spring:
 
   data:
     mongodb:
-      host: ${MONGODB_HOST:localhost}
-      port: ${MONGODB_PORT:27017}
-      database: ${MONGODB_DB:banking_accounts}
-      username: ${MONGODB_USER:}
-      password: ${MONGODB_PASS:}
-      authentication-database: admin
       uri: ${MONGODB_URI:mongodb://localhost:27017/banking_accounts}
 
   jackson:

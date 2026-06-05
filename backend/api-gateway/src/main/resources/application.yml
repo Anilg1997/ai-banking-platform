@@ -9,7 +9,6 @@ spring:
     gateway:
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin
-        - AddResponseHeader=X-Response-Time=${currentTime}
       globalcors:
         cors-configurations:
           '[/**]':

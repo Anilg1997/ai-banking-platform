@@ -14,6 +14,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -78,7 +80,7 @@ public class AuthController {
                         .email(user.getEmail())
                         .firstName(user.getFirstName())
                         .lastName(user.getLastName())
-                        .roles(user.getRoles().stream().map(Enum::name).toList())
+                        .roles(user.getRoles().stream().map(Enum::name).collect(Collectors.toSet()))
                         .emailVerified(user.isEmailVerified())
                         .twoFactorEnabled(user.isTwoFactorEnabled())
                         .build()
