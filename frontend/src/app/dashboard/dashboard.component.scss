@@ -170,6 +170,108 @@
   color: var(--error);
 }
 
+/* ===== Quick Access Accounts ===== */
+.quick-access-accounts {
+  margin-bottom: 24px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.view-all-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--accent-gold);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--transition-smooth);
+}
+
+.view-all-link:hover {
+  color: var(--accent-gold-light);
+  gap: 8px;
+}
+
+.view-all-link mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.mini-accounts-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.mini-account-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mini-account-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-active);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.mini-account-type {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mini-type-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.mini-type-dot.checking { background: #60a5fa; }
+.mini-type-dot.savings { background: #4ade80; }
+.mini-type-dot.business { background: #a78bfa; }
+.mini-type-dot.credit { background: #f87171; }
+.mini-type-dot.investment { background: var(--accent-gold); }
+.mini-type-dot.fixed_deposit { background: #60a5fa; }
+
+.mini-type-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.mini-balance {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.mini-name {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
 /* ===== Dashboard Grid ===== */
 .dashboard-grid {
   display: grid;

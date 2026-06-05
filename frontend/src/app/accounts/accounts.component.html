@@ -1,0 +1,151 @@
+<div class="accounts-page animate-fade-in">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <button class="back-btn" routerLink="/dashboard" matTooltip="Back to Dashboard">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-text">
+        <h1 class="page-title">Accounts</h1>
+        <p class="page-subtitle">Manage your banking accounts</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="total-balance-card">
+        <span class="total-label">Total Balance</span>
+        <span class="total-value">{{ formatCurrency(totalBalance) }}</span>
+        <span class="total-count">{{ totalCount }} account{{ totalCount !== 1 ? 's' : '' }}</span>
+      </div>
+      <button class="btn-create" (click)="toggleCreateForm()" matTooltip="Open new account">
+        <mat-icon>add</mat-icon>
+        <span>New Account</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Create Account Form -->
+  <div class="create-account-card" *ngIf="showCreateForm" @fadeInUp>
+    <div class="card-header">
+      <h2 class="card-title">
+        <mat-icon class="title-icon">add_circle_outline</mat-icon>
+        Open New Account
+      </h2>
+      <button class="close-btn" (click)="toggleCreateForm()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="create-form">
+      <div class="form-row">
+        <div class="form-group flex-2">
+          <label>Account Name</label>
+          <input
+            type="text"
+            class="form-input"
+            [(ngModel)]="newAccount.accountName"
+            placeholder="e.g., Primary Checking"
+          />
+        </div>
+        <div class="form-group flex-1">
+          <label>Account Type</label>
+          <select class="form-input" [(ngModel)]="newAccount.accountType">
+            <option *ngFor="let type of accountTypes" [value]="type">
+              {{ accountTypeLabels[type] }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group flex-1">
+          <label>Currency</label>
+          <select class="form-input" [(ngModel)]="newAccount.currency">
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="INR">INR - Indian Rupee</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label>Initial Deposit <span class="optional">(optional)</span></label>
+          <input
+            type="number"
+            class="form-input"
+            [(ngModel)]="newAccount.initialDeposit"
+            placeholder="0.00"
+            min="0"
+          />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-cancel" (click)="toggleCreateForm()">Cancel</button>
+        <button
+          class="btn-primary"
+          (click)="createAccount()"
+          [disabled]="isCreating || !newAccount.accountName"
+        >
+          <span *ngIf="!isCreating">
+            <mat-icon>check_circle</mat-icon> Open Account
+          </span>
+          <span *ngIf="isCreating">
+            <span class="spinner-btn"></span> Creating...
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading your accounts...</p>
+  </div>
+
+  <!-- Accounts Grid -->
+  <div class="accounts-grid" *ngIf="!isLoading">
+    <!-- Each Account Card -->
+    <div class="account-card animate-slide-in" *ngFor="let account of accounts; let i = index" [style.animation-delay]="(i * 0.05) + 's'">
+      <div class="account-card-header">
+        <div class="account-type-icon" [class]="account.accountType.toLowerCase()">
+          <mat-icon>{{ accountTypeIcons[account.accountType] }}</mat-icon>
+        </div>
+        <div class="account-status">
+          <span class="status-badge" [class]="getStatusClass(account.status)">
+            {{ accountStatusLabels[account.status] }}
+          </span>
+        </div>
+      </div>
+
+      <div class="account-card-body">
+        <h3 class="account-name">{{ account.accountName }}</h3>
+        <p class="account-number">{{ account.accountNumber }}</p>
+        <div class="account-type-label">{{ accountTypeLabels[account.accountType] }}</div>
+      </div>
+
+      <div class="account-card-footer">
+        <div class="balance-section">
+          <span class="balance-label">Available Balance</span>
+          <span class="balance-value">{{ formatCurrency(account.availableBalance, account.currency) }}</span>
+        </div>
+        <div class="account-actions">
+          <button class="icon-btn" matTooltip="View Details" [routerLink]="['/accounts', account.id]">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button class="icon-btn" matTooltip="Transfer Money">
+            <mat-icon>swap_horiz</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="accounts.length === 0">
+      <div class="empty-icon">
+        <mat-icon>account_balance_wallet</mat-icon>
+      </div>
+      <h3>No Accounts Yet</h3>
+      <p>Open your first account to get started with NovaBank.</p>
+      <button class="btn-primary" (click)="toggleCreateForm()">
+        <mat-icon>add</mat-icon> Open Account
+      </button>
+    </div>
+  </div>
+</div>

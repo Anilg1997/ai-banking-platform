@@ -91,6 +91,62 @@ services:
 
   # ============ Monitoring ============
 
+  # ============ MongoDB ============
+
+  mongodb:
+    image: mongo:7
+    container_name: banking-mongodb
+    environment:
+      MONGO_INITDB_DATABASE: banking_accounts
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - banking-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: banking-mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin123
+    ports:
+      - "8084:8081"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - banking-network
+
+  # ============ Account Microservice ============
+
+  account-service:
+    build:
+      context: ./backend
+      dockerfile: account-service/Dockerfile
+    container_name: banking-account-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      MONGODB_HOST: mongodb
+      MONGODB_PORT: 27017
+      JWT_SECRET: ${JWT_SECRET:-dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+    ports:
+      - "8083:8083"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - banking-network
+
+  # ============ Monitoring ============
+
   redis-commander:
     image: rediscommander/redis-commander:latest
     container_name: banking-redis-commander
@@ -107,6 +163,7 @@ services:
 volumes:
   postgres-data:
   redis-data:
+  mongodb-data:
 
 networks:
   banking-network:

@@ -7,17 +7,17 @@
         <p class="welcome-subtitle">Here's your financial overview for today</p>
       </div>
       <div class="header-actions">
-        <button class="action-btn primary" matTooltip="Transfer Money">
+        <button class="action-btn primary" routerLink="/accounts" matTooltip="View Accounts">
+          <mat-icon>account_balance_wallet</mat-icon>
+          <span>Accounts</span>
+        </button>
+        <button class="action-btn" matTooltip="Transfer Money">
           <mat-icon>swap_horiz</mat-icon>
           <span>Transfer</span>
         </button>
         <button class="action-btn" matTooltip="Deposit Funds">
           <mat-icon>add_circle_outline</mat-icon>
           <span>Deposit</span>
-        </button>
-        <button class="action-btn" matTooltip="View Statements">
-          <mat-icon>description</mat-icon>
-          <span>Statements</span>
         </button>
       </div>
     </div>
@@ -31,7 +31,7 @@
         <div class="stat-info">
           <span class="stat-label">Total Balance</span>
           <span class="stat-value">$247,890.32</span>
-          <span class="stat-change positive">+12.5% this month</span>
+          <span class="stat-change positive">{{ totalBankBalance > 0 ? formatCurrency(totalBankBalance) : '' }}</span>
         </div>
       </div>
       <div class="stat-card animate-slide-in" style="animation-delay: 0.1s">
@@ -68,6 +68,26 @@
   </header>
 
   <!-- Main Dashboard Grid -->
+  <!-- Quick Access to Accounts -->
+  <div class="quick-access-accounts" *ngIf="userAccounts.length > 0">
+    <div class="section-header">
+      <h2 class="section-title">Your Accounts</h2>
+      <a routerLink="/accounts" class="view-all-link">
+        View All <mat-icon>arrow_forward</mat-icon>
+      </a>
+    </div>
+    <div class="mini-accounts-row">
+      <div class="mini-account-card" *ngFor="let acc of userAccounts.slice(0, 3)" [routerLink]="['/accounts', acc.id]">
+        <div class="mini-account-type">
+          <span class="mini-type-dot" [class]="acc.accountType.toLowerCase()"></span>
+          <span class="mini-type-label">{{ accountTypeLabels[acc.accountType] }}</span>
+        </div>
+        <span class="mini-balance">{{ formatCurrency(acc.availableBalance, acc.currency) }}</span>
+        <span class="mini-name">{{ acc.accountName }}</span>
+      </div>
+    </div>
+  </div>
+
   <div class="dashboard-grid">
     <!-- Recent Transactions -->
     <div class="dashboard-card transactions-card">

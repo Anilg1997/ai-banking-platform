@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/auth/auth.service';
+import { AccountService } from '../core/services/account.service';
 import { User } from '../core/models/user.model';
+import { AccountSummary, ACCOUNT_TYPE_LABELS } from '../core/models/account.model';
 
 interface Transaction {
   name: string;
@@ -57,18 +59,42 @@ export class DashboardComponent implements OnInit {
     { name: 'Car Insurance', dueDate: 'Jun 25, 2025', amount: 245, status: 'auto' },
   ];
 
+  userAccounts: AccountSummary[] = [];
+  totalBankBalance: number = 0;
+  accountTypeLabels = ACCOUNT_TYPE_LABELS;
+
   constructor(
     private authService: AuthService,
+    private accountService: AccountService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {
       this.user = user;
+      if (user) {
+        this.loadAccounts(user.id);
+      }
     });
 
     if (!this.authService.isLoggedIn) {
       this.router.navigate(['/login']);
     }
+  }
+
+  loadAccounts(userId: string): void {
+    this.accountService.getAccounts(userId).subscribe({
+      next: (accounts) => {
+        this.userAccounts = accounts;
+        this.totalBankBalance = accounts.reduce((sum, a) => sum + a.balance, 0);
+      }
+    });
+  }
+
+  formatCurrency(amount: number, currency: string = 'USD'): string {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency,
+    }).format(amount);
   }
 }

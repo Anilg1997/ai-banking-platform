@@ -42,6 +42,10 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+// Accounts Components
+import { AccountsComponent } from './accounts/accounts.component';
+import { AccountDetailComponent } from './accounts/account-detail.component';
+
 // Core
 import { AuthService } from './core/auth/auth.service';
 import { AuthGuard } from './core/auth/auth.guard';
@@ -53,6 +57,8 @@ import { JwtInterceptor } from './core/auth/jwt.interceptor';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
+    AccountsComponent,
+    AccountDetailComponent,
   ],
   imports: [
     BrowserModule,

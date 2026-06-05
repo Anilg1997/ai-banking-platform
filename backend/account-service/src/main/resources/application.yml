@@ -1,0 +1,46 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: account-service
+
+  data:
+    mongodb:
+      host: ${MONGODB_HOST:localhost}
+      port: ${MONGODB_PORT:27017}
+      database: ${MONGODB_DB:banking_accounts}
+      username: ${MONGODB_USER:}
+      password: ${MONGODB_PASS:}
+      authentication-database: admin
+      uri: ${MONGODB_URI:mongodb://localhost:27017/banking_accounts}
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: UTC
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    com.banking: DEBUG
+    org.springframework.data.mongodb: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
