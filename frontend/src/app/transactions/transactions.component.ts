@@ -14,6 +14,7 @@ import {
 import { AccountSummary } from '../core/models/account.model';
 
 @Component({
+  standalone: false,
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss'],

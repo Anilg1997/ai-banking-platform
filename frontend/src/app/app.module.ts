@@ -37,22 +37,14 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-// Auth Components
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
-// Accounts Components
 import { AccountsComponent } from './accounts/accounts.component';
 import { AccountDetailComponent } from './accounts/account-detail.component';
-
-// Transaction Components
 import { TransactionsComponent } from './transactions/transactions.component';
-
-// AI Components
 import { AiChatComponent } from './ai/ai-chat.component';
 
-// Core
 import { AuthService } from './core/auth/auth.service';
 import { AuthGuard } from './core/auth/auth.guard';
 import { JwtInterceptor } from './core/auth/jwt.interceptor';
@@ -76,8 +68,6 @@ import { JwtInterceptor } from './core/auth/jwt.interceptor';
     FormsModule,
     RouterModule,
     AppRoutingModule,
-
-    // Material
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,

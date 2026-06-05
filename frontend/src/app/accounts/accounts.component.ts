@@ -9,6 +9,7 @@ import { AccountService } from '../core/services/account.service';
 import { AccountSummary, ACCOUNT_TYPE_LABELS, ACCOUNT_TYPE_ICONS, ACCOUNT_STATUS_LABELS } from '../core/models/account.model';
 
 @Component({
+  standalone: false,
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss'],
@@ -27,7 +28,7 @@ export class AccountsComponent implements OnInit, OnDestroy {
   };
   isCreating = false;
 
-  accountTypeLabels = ACCOUNT_TYPE_LABELS;
+  accountTypeLabels: Record<string, string> = ACCOUNT_TYPE_LABELS as Record<string, string>;
   accountTypeIcons = ACCOUNT_TYPE_ICONS;
   accountStatusLabels = ACCOUNT_STATUS_LABELS;
   accountTypes = Object.keys(ACCOUNT_TYPE_LABELS) as any[];

@@ -6,6 +6,7 @@ import { AuthService } from './core/auth/auth.service';
 import { NotificationService } from './core/services/notification.service';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
+    public authService: AuthService,
     public notificationService: NotificationService
   ) {}
 

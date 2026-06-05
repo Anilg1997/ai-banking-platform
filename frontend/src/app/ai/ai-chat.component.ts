@@ -5,6 +5,7 @@ import { takeUntil, finalize } from 'rxjs/operators';
 import { AiService, ChatMessage } from '../core/services/ai.service';
 
 @Component({
+  standalone: false,
   selector: 'app-ai-chat',
   templateUrl: './ai-chat.component.html',
   styleUrls: ['./ai-chat.component.scss'],

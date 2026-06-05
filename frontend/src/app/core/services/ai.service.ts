@@ -72,10 +72,10 @@ export class AiService {
   }
 
   /** Call a banking tool */
-  callTool(tool: string, arguments: any): Observable<any> {
+  callTool(tool: string, toolArgs: any): Observable<any> {
     return this.http.post(`${this.directAiUrl}/tools/call`, {
       tool,
-      arguments,
+      arguments: toolArgs,
     });
   }
 

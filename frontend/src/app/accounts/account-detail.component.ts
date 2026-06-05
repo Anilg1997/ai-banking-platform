@@ -6,6 +6,7 @@ import { AccountService } from '../core/services/account.service';
 import { Account, ACCOUNT_TYPE_LABELS, ACCOUNT_STATUS_LABELS } from '../core/models/account.model';
 
 @Component({
+  standalone: false,
   selector: 'app-account-detail',
   templateUrl: './account-detail.component.html',
   styleUrls: ['./accounts.component.scss'],
