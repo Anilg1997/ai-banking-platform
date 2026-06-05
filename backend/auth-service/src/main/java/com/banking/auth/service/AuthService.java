@@ -82,6 +82,7 @@ public class AuthService {
         return buildAuthResponse(user, accessToken, refreshToken);
     }
 
+    @Transactional
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByUsernameOrEmail(request.getUsernameOrEmail(), request.getUsernameOrEmail())
                 .orElseThrow(() -> new BadCredentialsException("Invalid username/email or password"));

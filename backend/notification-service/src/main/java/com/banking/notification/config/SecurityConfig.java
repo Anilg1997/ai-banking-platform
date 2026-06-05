@@ -31,8 +31,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers("/actuator/**").permitAll()
-                        .requestMatchers("/api/notifications/stream/**").permitAll()
+                        .requestMatchers("/actuator/{*path}").permitAll()
+                        .requestMatchers("/api/notifications/stream/{*path}").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

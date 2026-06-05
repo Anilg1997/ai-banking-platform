@@ -90,7 +90,7 @@ public class User implements UserDetails {
         accountNonLocked = true;
         accountNonExpired = true;
         credentialsNonExpired = true;
-        emailVerified = false;
+        // emailVerified is set by AuthService.register() - don't override here
         twoFactorEnabled = false;
         failedAttempts = 0;
     }
