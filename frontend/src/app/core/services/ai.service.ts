@@ -33,7 +33,6 @@ export interface AnalysisResult {
   providedIn: 'root',
 })
 export class AiService {
-  private aiUrl = `${environment.apiUrl}/api/ai`;
   private directAiUrl = `${environment.aiApiUrl}/api/ai`;
 
   constructor(private http: HttpClient) {}

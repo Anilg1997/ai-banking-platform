@@ -105,6 +105,7 @@ export class DashboardComponent implements OnInit {
       },
       error: () => {
         this.aiInsightsLoading = false;
+        console.warn('AI Insights not available - ensure the AI service is running on port 8090');
       }
     });
   }
