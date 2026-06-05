@@ -1,0 +1,10 @@
+# Docker profile
+spring:
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      password: ${REDIS_PASSWORD:redis_pass_123}
+
+logging:
+  level:
+    com.banking: INFO

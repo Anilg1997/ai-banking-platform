@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/banking_auth
+  data:
+    redis:
+      host: localhost
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    com.banking: DEBUG
+    org.hibernate.SQL: DEBUG

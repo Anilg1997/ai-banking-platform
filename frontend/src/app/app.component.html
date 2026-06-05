@@ -1,0 +1,46 @@
+<div class="app-container">
+  <!-- Animated Background Orbs -->
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+
+  <!-- Navigation Bar (hidden on auth pages) -->
+  <nav class="navbar animate-fade-in" *ngIf="!isAuthPage">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <span class="brand-icon">◆</span>
+        <span class="brand-text">Nova<span class="brand-accent">Bank</span></span>
+      </div>
+      <div class="nav-actions">
+        <button mat-icon-button class="nav-btn" matTooltip="Notifications">
+          <mat-icon class="nav-icon">notifications_outline</mat-icon>
+          <span class="notification-dot"></span>
+        </button>
+        <button mat-icon-button class="nav-btn" matTooltip="Settings">
+          <mat-icon class="nav-icon">settings_outline</mat-icon>
+        </button>
+        <button mat-icon-button class="nav-btn nav-avatar" matTooltip="Profile">
+          <span class="avatar-text">JD</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer animate-fade-in" *ngIf="!isAuthPage">
+    <div class="footer-container">
+      <span class="footer-text">&copy; 2025 NovaBank. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="#" class="footer-link">Privacy</a>
+        <a href="#" class="footer-link">Terms</a>
+        <a href="#" class="footer-link">Security</a>
+        <a href="#" class="footer-link">Support</a>
+      </div>
+    </div>
+  </footer>
+</div>

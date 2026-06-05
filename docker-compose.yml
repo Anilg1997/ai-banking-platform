@@ -1,0 +1,113 @@
+version: '3.8'
+
+services:
+  # ============ Infrastructure ============
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: banking-postgres
+    environment:
+      POSTGRES_DB: banking_auth
+      POSTGRES_USER: banking_user
+      POSTGRES_PASSWORD: banking_pass_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d
+    networks:
+      - banking-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U banking_user -d banking_auth"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: banking-redis
+    command: redis-server --appendonly yes --requirepass redis_pass_123
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - banking-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis_pass_123", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ============ Microservices ============
+
+  auth-service:
+    build:
+      context: ./backend
+      dockerfile: auth-service/Dockerfile
+    container_name: banking-auth-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: banking_auth
+      DB_USER: banking_user
+      DB_PASSWORD: banking_pass_123
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis_pass_123
+      JWT_SECRET: ${JWT_SECRET:-dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+    ports:
+      - "8081:8081"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - banking-network
+
+  api-gateway:
+    build:
+      context: ./backend
+      dockerfile: api-gateway/Dockerfile
+    container_name: banking-api-gateway
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis_pass_123
+      AUTH_SERVICE_URL: http://auth-service:8081
+      JWT_SECRET: ${JWT_SECRET:-dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+    ports:
+      - "8080:8080"
+    depends_on:
+      auth-service:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    networks:
+      - banking-network
+
+  # ============ Monitoring ============
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: banking-redis-commander
+    environment:
+      REDIS_HOSTS: local:redis:6379:0:redis_pass_123
+    ports:
+      - "8082:8081"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - banking-network
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  banking-network:
+    driver: bridge

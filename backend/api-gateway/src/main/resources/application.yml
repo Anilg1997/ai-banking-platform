@@ -1,0 +1,60 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin
+        - AddResponseHeader=X-Response-Time=${currentTime}
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: auth-service
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - StripPrefix=0
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter:
+                  replenishRate: 10
+                  burstCapacity: 20
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    com.banking: DEBUG
+    org.springframework.cloud.gateway: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,gateway
+  endpoint:
+    gateway:
+      enabled: true

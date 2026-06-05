@@ -1,0 +1,227 @@
+<div class="dashboard-page animate-fade-in">
+  <!-- Welcome Header -->
+  <header class="dashboard-header">
+    <div class="welcome-section">
+      <div class="welcome-text">
+        <h1 class="welcome-title">Good morning, {{ user?.firstName || 'User' }}</h1>
+        <p class="welcome-subtitle">Here's your financial overview for today</p>
+      </div>
+      <div class="header-actions">
+        <button class="action-btn primary" matTooltip="Transfer Money">
+          <mat-icon>swap_horiz</mat-icon>
+          <span>Transfer</span>
+        </button>
+        <button class="action-btn" matTooltip="Deposit Funds">
+          <mat-icon>add_circle_outline</mat-icon>
+          <span>Deposit</span>
+        </button>
+        <button class="action-btn" matTooltip="View Statements">
+          <mat-icon>description</mat-icon>
+          <span>Statements</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="quick-stats">
+      <div class="stat-card animate-slide-in">
+        <div class="stat-icon balance">
+          <mat-icon>account_balance_wallet</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Total Balance</span>
+          <span class="stat-value">$247,890.32</span>
+          <span class="stat-change positive">+12.5% this month</span>
+        </div>
+      </div>
+      <div class="stat-card animate-slide-in" style="animation-delay: 0.1s">
+        <div class="stat-icon income">
+          <mat-icon>trending_up</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Monthly Income</span>
+          <span class="stat-value">$18,240.00</span>
+          <span class="stat-change positive">+8.2% vs last month</span>
+        </div>
+      </div>
+      <div class="stat-card animate-slide-in" style="animation-delay: 0.2s">
+        <div class="stat-icon expense">
+          <mat-icon>trending_down</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Monthly Expenses</span>
+          <span class="stat-value">$8,920.50</span>
+          <span class="stat-change negative">-3.1% vs last month</span>
+        </div>
+      </div>
+      <div class="stat-card animate-slide-in" style="animation-delay: 0.3s">
+        <div class="stat-icon savings">
+          <mat-icon>savings</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Total Savings</span>
+          <span class="stat-value">$89,450.00</span>
+          <span class="stat-change positive">+15.3% this year</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Grid -->
+  <div class="dashboard-grid">
+    <!-- Recent Transactions -->
+    <div class="dashboard-card transactions-card">
+      <div class="card-header">
+        <h2 class="card-title">Recent Transactions</h2>
+        <button class="card-action" matTooltip="View all transactions">
+          View All
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="transactions-list">
+        <div class="transaction-item" *ngFor="let txn of recentTransactions">
+          <div class="txn-icon" [class]="txn.type">
+            <mat-icon>{{ txn.icon }}</mat-icon>
+          </div>
+          <div class="txn-info">
+            <span class="txn-name">{{ txn.name }}</span>
+            <span class="txn-date">{{ txn.date }}</span>
+          </div>
+          <div class="txn-amount" [class.negative]="txn.type === 'debit'">
+            {{ txn.type === 'credit' ? '+' : '-' }}${{ txn.amount.toLocaleString() }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Investment Portfolio -->
+    <div class="dashboard-card portfolio-card">
+      <div class="card-header">
+        <h2 class="card-title">Investment Portfolio</h2>
+        <button class="card-action" matTooltip="View portfolio details">
+          Manage
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="portfolio-list">
+        <div class="portfolio-item" *ngFor="let inv of investments">
+          <div class="portfolio-info">
+            <span class="portfolio-name">{{ inv.name }}</span>
+            <span class="portfolio-shares">{{ inv.shares }} shares</span>
+          </div>
+          <div class="portfolio-value">
+            <span class="value-amount">${{ inv.value.toLocaleString() }}</span>
+            <span class="value-change" [class.positive]="inv.change > 0" [class.negative]="inv.change < 0">
+              {{ inv.change > 0 ? '+' : '' }}{{ inv.change }}%
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upcoming Payments -->
+    <div class="dashboard-card payments-card">
+      <div class="card-header">
+        <h2 class="card-title">Upcoming Payments</h2>
+        <button class="card-action" matTooltip="Schedule a payment">
+          Schedule
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="payments-list">
+        <div class="payment-item" *ngFor="let payment of upcomingPayments">
+          <div class="payment-info">
+            <span class="payment-name">{{ payment.name }}</span>
+            <span class="payment-date">Due: {{ payment.dueDate }}</span>
+          </div>
+          <div class="payment-amount">
+            <span>${{ payment.amount.toLocaleString() }}</span>
+            <span class="payment-status" [class.paid]="payment.status === 'paid'" [class.pending]="payment.status === 'pending'">
+              {{ payment.status === 'paid' ? 'Paid' : payment.status === 'auto' ? 'Auto' : 'Pending' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Insights Card -->
+    <div class="dashboard-card insights-card">
+      <div class="card-header">
+        <h2 class="card-title">
+          <mat-icon class="ai-icon">auto_awesome</mat-icon>
+          AI Insights
+        </h2>
+        <span class="ai-badge">Powered by Ollama</span>
+      </div>
+      <div class="insights-content">
+        <div class="insight-item">
+          <div class="insight-icon spending">
+            <mat-icon>lightbulb</mat-icon>
+          </div>
+          <div class="insight-text">
+            <p>Your dining expenses increased 23% this month. Consider setting a budget of $350/month.</p>
+          </div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-icon savings-icon">
+            <mat-icon>trending_up</mat-icon>
+          </div>
+          <div class="insight-text">
+            <p>You're on track to save $12,000 by December. Increase your monthly savings by $200 to reach $15,000.</p>
+          </div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-icon invest">
+            <mat-icon>show_chart</mat-icon>
+          </div>
+          <div class="insight-text">
+            <p>Tech sector is performing well. Consider rebalancing your portfolio for optimal returns.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="dashboard-card quick-actions-card">
+      <h2 class="card-title">Quick Actions</h2>
+      <div class="actions-grid">
+        <button class="quick-action-btn">
+          <div class="qa-icon">
+            <mat-icon>send_money</mat-icon>
+          </div>
+          <span>Send Money</span>
+        </button>
+        <button class="quick-action-btn">
+          <div class="qa-icon">
+            <mat-icon>receipt_long</mat-icon>
+          </div>
+          <span>Pay Bills</span>
+        </button>
+        <button class="quick-action-btn">
+          <div class="qa-icon">
+            <mat-icon>credit_card</mat-icon>
+          </div>
+          <span>Cards</span>
+        </button>
+        <button class="quick-action-btn">
+          <div class="qa-icon">
+            <mat-icon>account_balance</mat-icon>
+          </div>
+          <span>Loans</span>
+        </button>
+        <button class="quick-action-btn">
+          <div class="qa-icon">
+            <mat-icon>currency_exchange</mat-icon>
+          </div>
+          <span>Exchange</span>
+        </button>
+        <button class="quick-action-btn">
+          <div class="qa-icon">
+            <mat-icon>support_agent</mat-icon>
+          </div>
+          <span>AI Chat</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

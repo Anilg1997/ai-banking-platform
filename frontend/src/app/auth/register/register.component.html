@@ -1,0 +1,245 @@
+<div class="auth-page">
+  <div class="auth-container animate-fade-in-up">
+    <!-- Left Side - Registration Form -->
+    <div class="auth-form-container">
+      <div class="auth-form-wrapper">
+        <div class="form-header">
+          <div class="back-link">
+            <a routerLink="/login" class="auth-link">
+              <mat-icon>arrow_back</mat-icon> Back to Sign In
+            </a>
+          </div>
+          <h2 class="form-title">Create Account</h2>
+          <p class="form-subtitle">Join NovaBank for secure, intelligent banking</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+          <!-- Full Name Row -->
+          <div class="form-row">
+            <div class="form-field flex-1">
+              <label for="firstName">First Name</label>
+              <input
+                id="firstName"
+                type="text"
+                formControlName="firstName"
+                class="form-input"
+                placeholder="John"
+                [class.error]="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched"
+              />
+              <span class="error-text" *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+                First name is required
+              </span>
+            </div>
+            <div class="form-field flex-1">
+              <label for="lastName">Last Name</label>
+              <input
+                id="lastName"
+                type="text"
+                formControlName="lastName"
+                class="form-input"
+                placeholder="Doe"
+                [class.error]="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched"
+              />
+              <span class="error-text" *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+                Last name is required
+              </span>
+            </div>
+          </div>
+
+          <!-- Username -->
+          <div class="form-field">
+            <label for="username">
+              <mat-icon class="field-icon">person_outline</mat-icon>
+              Username
+            </label>
+            <input
+              id="username"
+              type="text"
+              formControlName="username"
+              class="form-input"
+              placeholder="Choose a unique username"
+              [class.error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+              autocomplete="username"
+            />
+            <span class="error-text" *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+              {{ getErrorMessage('username') }}
+            </span>
+          </div>
+
+          <!-- Email -->
+          <div class="form-field">
+            <label for="email">
+              <mat-icon class="field-icon">email_outline</mat-icon>
+              Email Address
+            </label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              class="form-input"
+              placeholder="john.doe@example.com"
+              [class.error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+              autocomplete="email"
+            />
+            <span class="error-text" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+              {{ getErrorMessage('email') }}
+            </span>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-field">
+            <label for="phoneNumber">
+              <mat-icon class="field-icon">phone_outline</mat-icon>
+              Phone Number (Optional)
+            </label>
+            <input
+              id="phoneNumber"
+              type="tel"
+              formControlName="phoneNumber"
+              class="form-input"
+              placeholder="+1 (555) 000-0000"
+              [class.error]="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched"
+            />
+          </div>
+
+          <!-- Password -->
+          <div class="form-field">
+            <label for="password">
+              <mat-icon class="field-icon">lock_outline</mat-icon>
+              Password
+            </label>
+            <div class="password-field">
+              <input
+                id="password"
+                [type]="hidePassword ? 'password' : 'text'"
+                formControlName="password"
+                class="form-input"
+                placeholder="Create a strong password"
+                [class.error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+                autocomplete="new-password"
+              />
+              <button type="button" class="toggle-password" (click)="hidePassword = !hidePassword">
+                <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </div>
+            <span class="error-text" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+              {{ getErrorMessage('password') }}
+            </span>
+            <div class="password-strength" *ngIf="registerForm.get('password')?.value">
+              <div class="strength-bar">
+                <div class="strength-fill" [style.width.%]="passwordStrength" [class.weak]="passwordStrength <= 25" [class.medium]="passwordStrength > 25 && passwordStrength <= 65" [class.strong]="passwordStrength > 65"></div>
+              </div>
+              <span class="strength-text">{{ passwordStrengthText }}</span>
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-field">
+            <label for="confirmPassword">
+              <mat-icon class="field-icon">lock_outline</mat-icon>
+              Confirm Password
+            </label>
+            <div class="password-field">
+              <input
+                id="confirmPassword"
+                [type]="hideConfirmPassword ? 'password' : 'text'"
+                formControlName="confirmPassword"
+                class="form-input"
+                placeholder="Re-enter your password"
+                [class.error]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched"
+                autocomplete="new-password"
+              />
+              <button type="button" class="toggle-password" (click)="hideConfirmPassword = !hideConfirmPassword">
+                <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+            </div>
+            <span class="error-text" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+              {{ getErrorMessage('confirmPassword') }}
+            </span>
+          </div>
+
+          <!-- Terms -->
+          <div class="form-field">
+            <label class="checkbox-label terms-label">
+              <input type="checkbox" formControlName="agreeTerms" class="checkbox-input" />
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-text">
+                I agree to the <a href="#" class="auth-link">Terms of Service</a> and <a href="#" class="auth-link">Privacy Policy</a>
+              </span>
+            </label>
+            <span class="error-text" *ngIf="registerForm.get('agreeTerms')?.invalid && registerForm.get('agreeTerms')?.touched">
+              You must agree to the terms
+            </span>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-primary" [disabled]="isLoading">
+            <span class="btn-content" *ngIf="!isLoading">
+              Create Account
+              <mat-icon class="btn-icon">person_add</mat-icon>
+            </span>
+            <span class="btn-content" *ngIf="isLoading">
+              <span class="spinner-btn"></span>
+              Creating account...
+            </span>
+          </button>
+        </form>
+
+        <!-- Login Link -->
+        <div class="auth-footer">
+          <p class="auth-footer-text">
+            Already have an account?
+            <a routerLink="/login" class="auth-link highlight">Sign In</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Branding -->
+    <div class="auth-branding">
+      <div class="branding-content">
+        <div class="brand-logo">
+          <span class="logo-icon">◆</span>
+        </div>
+        <h1 class="brand-title">NovaBank</h1>
+        <p class="brand-subtitle">Enterprise Banking Platform</p>
+
+        <div class="benefits-list">
+          <div class="benefit-item">
+            <div class="benefit-icon">🛡️</div>
+            <div class="benefit-info">
+              <h3>Secure & Encrypted</h3>
+              <p>Bank-grade 256-bit encryption protecting your data</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">⚡</div>
+            <div class="benefit-info">
+              <h3>Real-Time Banking</h3>
+              <p>Instant transactions with real-time updates</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">🤖</div>
+            <div class="benefit-info">
+              <h3>AI Smart Assistant</h3>
+              <p>Intelligent insights powered by advanced AI</p>
+            </div>
+          </div>
+          <div class="benefit-item">
+            <div class="benefit-icon">💳</div>
+            <div class="benefit-info">
+              <h3>Smart Cards</h3>
+              <p>Virtual and physical cards with real-time controls</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial">
+          <p>"NovaBank transformed how I manage my finances. The AI insights are incredible!"</p>
+          <span class="testimonial-author">— Sarah K., Enterprise Client</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
