@@ -1,0 +1,78 @@
+<div class="notifications-page animate-fade-in">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <button class="back-btn" routerLink="/dashboard" matTooltip="Back to Dashboard">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-text">
+        <h1 class="page-title">Notifications</h1>
+        <p class="page-subtitle">{{ unreadCount }} unread notification{{ unreadCount !== 1 ? 's' : '' }}</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn-mark-all" (click)="markAllAsRead()" [disabled]="unreadCount === 0" matTooltip="Mark all as read">
+        <mat-icon>done_all</mat-icon>
+        <span>Mark all read</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="filter-tabs">
+    <button class="filter-btn" [class.active]="selectedFilter === 'all'" (click)="selectedFilter = 'all'">
+      All
+      <span class="filter-count">{{ notifications.length }}</span>
+    </button>
+    <button class="filter-btn" [class.active]="selectedFilter === 'unread'" (click)="selectedFilter = 'unread'">
+      Unread
+      <span class="filter-count" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading notifications...</p>
+  </div>
+
+  <!-- Notifications List -->
+  <div class="notifications-list" *ngIf="!isLoading">
+    <div class="notification-item animate-slide-in" *ngFor="let notif of filteredNotifications; let i = index"
+         [class.unread]="!notif.read"
+         [style.animation-delay]="(i * 0.03) + 's'"
+         (click)="markAsRead(notif)">
+      <div class="notif-icon" [style.background]="getColor(notif.type) + '22'" [style.color]="getColor(notif.type)">
+        <mat-icon>{{ getIcon(notif.type) }}</mat-icon>
+      </div>
+      <div class="notif-content">
+        <div class="notif-header">
+          <span class="notif-title">{{ notif.title }}</span>
+          <span class="notif-time" [matTooltip]="formatFullDate(notif.createdAt)">{{ formatTime(notif.createdAt) }}</span>
+        </div>
+        <p class="notif-message">{{ notif.message }}</p>
+        <div class="notif-footer" *ngIf="notif.referenceId">
+          <span class="notif-reference">
+            <mat-icon>link</mat-icon>
+            {{ notif.referenceType }}: {{ notif.referenceId }}
+          </span>
+        </div>
+      </div>
+      <div class="notif-actions">
+        <div class="unread-dot" *ngIf="!notif.read"></div>
+        <button class="delete-btn" (click)="deleteNotification(notif, $event)" matTooltip="Remove">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="filteredNotifications.length === 0">
+      <div class="empty-icon">
+        <mat-icon>{{ selectedFilter === 'unread' ? 'mark_email_read' : 'notifications_off' }}</mat-icon>
+      </div>
+      <h3>{{ selectedFilter === 'unread' ? 'All caught up!' : 'No Notifications Yet' }}</h3>
+      <p>{{ selectedFilter === 'unread' ? 'You have read all your notifications.' : 'You\'ll see notifications here when there\'s activity on your accounts.' }}</p>
+    </div>
+  </div>
+</div>

@@ -44,6 +44,8 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { AccountDetailComponent } from './accounts/account-detail.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { AiChatComponent } from './ai/ai-chat.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 
 import { AuthService } from './core/auth/auth.service';
 import { AuthGuard } from './core/auth/auth.guard';
@@ -59,6 +61,8 @@ import { JwtInterceptor } from './core/auth/jwt.interceptor';
     AccountDetailComponent,
     TransactionsComponent,
     AiChatComponent,
+    NotificationsComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,

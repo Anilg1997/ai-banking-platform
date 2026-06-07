@@ -229,7 +229,7 @@ See `/docs/deployment-aws.md` for production deployment guide.
 
 ## 📋 Phase Roadmap
 
-### ✅ Phase 1: Foundation (Current)
+### ✅ Phase 1: Foundation
 - [x] Project structure & monorepo setup
 - [x] Auth Service (Register/Login with JWT)
 - [x] API Gateway with rate limiting
@@ -239,23 +239,26 @@ See `/docs/deployment-aws.md` for production deployment guide.
 - [x] GitHub Actions CI/CD
 - [x] Local Ollama integration ready
 
-### 🔄 Phase 2: Core Banking
-- [ ] Account Service (CRUD, balances)
-- [ ] Transaction Service (send, receive, history)
-- [ ] Kafka event streaming setup
-- [ ] MongoDB for documents
-- [ ] Redis caching layer
-- [ ] More UI screens (accounts, transactions)
+### ✅ Phase 2: Core Banking
+- [x] Account Service (CRUD, balances)
+- [x] Transaction Service (send, receive, history)
+- [x] Kafka event streaming setup
+- [x] MongoDB for documents
+- [x] Redis caching layer
+- [x] More UI screens (accounts, transactions, account detail, notifications)
+- [x] Real-time SSE updates for transactions & notifications
+- [x] Notification Service with Kafka consumer
 
-### 🔄 Phase 3: AI & Intelligence
-- [ ] RAG pipeline with Ollama
-- [ ] AI Agents (fraud, loans, advisory)
-- [ ] MCP server implementation
-- [ ] Agentic workflows
-- [ ] AI-powered UI components
+### ✅ Phase 3: AI & Intelligence
+- [x] RAG pipeline with Ollama
+- [x] AI-powered chat assistant with knowledge base (30 FAQ entries)
+- [x] AI financial insights & analysis
+- [x] MCP server implementation (banking tools)
+- [x] AI-powered UI components (chat widget, insights card)
 
 ### 🔄 Phase 4: Production Ready
-- [ ] Full CI/CD pipeline
+- [x] Full CI/CD pipeline (GitHub Actions)
+- [x] Docker images for all services
 - [ ] AWS infrastructure (ECS/RDS/ElastiCache/MSK)
 - [ ] Monitoring & observability
 - [ ] Load testing & optimization

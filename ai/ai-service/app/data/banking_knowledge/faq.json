@@ -1,92 +1,157 @@
 [
   {
-    "id": "faq-1",
-    "category": "accounts",
-    "question": "How do I open a bank account?",
-    "answer": "To open a bank account with NovaBank, log in to your account and navigate to the Accounts page. Click 'New Account', choose your account type (Checking, Savings, Business, Credit, Investment, or Fixed Deposit), select your currency, and make an initial deposit. Your account will be created and activated shortly."
-  },
-  {
-    "id": "faq-2",
-    "category": "accounts",
     "question": "What types of accounts does NovaBank offer?",
-    "answer": "NovaBank offers 6 types of accounts: Checking (everyday transactions with 0.5% APY), Savings (high-yield savings with 4.5% APY), Business (for commercial use with 2.0% APY), Credit (line of credit), Investment (trading and portfolio management with 6.0% APY), and Fixed Deposit (term deposits with 7.0% APY)."
+    "answer": "NovaBank offers six types of accounts: Checking accounts for everyday transactions with 0.5% APY, Savings accounts for growing your money with 4.5% APY, Business accounts for commercial needs with 2.0% APY, Credit accounts for borrowing, Investment accounts for portfolio management with 6.0% APY, and Fixed Deposit accounts for long-term savings with 7.0% APY.",
+    "category": "accounts"
   },
   {
-    "id": "faq-3",
-    "category": "accounts",
-    "question": "How do I check my account balance?",
-    "answer": "You can check your account balance from the Dashboard or Accounts page. Your available balance (funds you can use immediately) and current balance (total funds including holds) are displayed. You can also see individual account balances by clicking on any account card."
+    "question": "How do I open a new account?",
+    "answer": "To open a new account on NovaBank, log into your dashboard, navigate to the Accounts section, and click 'New Account'. Choose your account type (Checking, Savings, Business, etc.), enter an account name, select your currency (USD, EUR, GBP, INR), and optionally make an initial deposit. Your account will be created instantly with a unique NOVA account number.",
+    "category": "accounts"
   },
   {
-    "id": "faq-4",
-    "category": "transfers",
     "question": "How do I transfer money between accounts?",
-    "answer": "To transfer money, go to the Transactions page and click 'Send Money'. Select the source account, enter the destination account ID, specify the amount and currency, add an optional description, and confirm. The transfer is processed in real-time and you'll see the updated balances immediately."
+    "answer": "To transfer money, go to the Transactions page and click 'Send Money'. Select the source account from your active accounts, enter the destination account ID, specify the amount and currency, add an optional description and category, then click Send. Transfers are processed in real-time and you'll receive a confirmation with a transaction reference number.",
+    "category": "transactions"
   },
   {
-    "id": "faq-5",
-    "category": "transfers",
-    "question": "What is the maximum transfer amount?",
-    "answer": "NovaBank allows transfers up to $10,000,000 (or equivalent in other currencies) per transaction. For amounts over $50,000, additional security verification may be required. Daily transfer limits may apply based on your account tier."
+    "question": "What are the transfer limits?",
+    "answer": "NovaBank supports transfers up to your available account balance. For savings accounts, ensure you have sufficient available balance (not on hold). Standard transfers are free with no fees. International transfers may have a small exchange rate spread. Daily transfer limits can be configured in your account settings.",
+    "category": "transactions"
   },
   {
-    "id": "faq-6",
-    "category": "transfers",
-    "question": "Can I reverse a transfer?",
-    "answer": "Yes, completed transactions can be reversed. Go to the transaction details and use the 'Reverse' option. The reversal will transfer the funds back from the destination to the source account. Reversals are subject to fund availability in the destination account."
+    "question": "How do I check my account balance?",
+    "answer": "You can check your account balance in several ways: View your dashboard for a summary of all account balances, navigate to Accounts for detailed balances including available balance, current balance, and holds, or use the AI assistant to ask 'What is my account balance?' for a quick answer.",
+    "category": "accounts"
   },
   {
-    "id": "faq-7",
-    "category": "security",
-    "question": "How does NovaBank protect my account?",
-    "answer": "NovaBank uses bank-grade 256-bit encryption for all data. We implement JWT-based authentication with access and refresh tokens, Redis-backed session management, account lockout after 5 failed attempts, and optional two-factor authentication. All API requests are rate-limited and validated."
+    "question": "What security measures does NovaBank use?",
+    "answer": "NovaBank employs bank-grade security including: 256-bit encryption for all data, JWT-based authentication with token refresh, account lockout after 5 failed login attempts (15-minute lockout), Redis-backed session management, rate limiting on all API endpoints, and secure password hashing with BCrypt (12 rounds).",
+    "category": "security"
   },
   {
-    "id": "faq-8",
-    "category": "security",
-    "question": "What should I do if I see unauthorized transactions?",
-    "answer": "If you notice any unauthorized transactions, immediately change your password from the Settings page and contact NovaBank Support. Our fraud detection system monitors transactions in real-time and may flag suspicious activity automatically."
+    "question": "How do I reset my password?",
+    "answer": "To reset your password, click 'Forgot Password?' on the login page. Enter your registered email address and we'll send you a password reset link. The link expires after 24 hours. If you're locked out due to too many failed attempts, wait 15 minutes and try again, or contact support.",
+    "category": "security"
   },
   {
-    "id": "faq-9",
-    "category": "loans",
-    "question": "How can I apply for a loan?",
-    "answer": "NovaBank offers various loan products including personal loans, home mortgages, and business loans. You can start your application from the Loans section in your dashboard. Our AI-powered loan approval system will analyze your financial profile and provide a decision within minutes."
+    "question": "What is overdraft protection?",
+    "answer": "Overdraft protection is an optional feature that allows your account balance to go below zero up to a specified limit. When enabled, you can make transactions even if your available balance is insufficient, up to your overdraft limit. This prevents transactions from being declined. You can enable or disable overdraft protection in your account settings.",
+    "category": "accounts"
   },
   {
-    "id": "faq-10",
-    "category": "investments",
-    "question": "What investment options are available?",
-    "answer": "NovaBank provides investment accounts for trading stocks, ETFs, bonds, and mutual funds. Our AI Financial Advisor can help create a personalized investment portfolio based on your risk tolerance and financial goals. We offer investment accounts with competitive 6.0% APY returns."
+    "question": "How do I view my transaction history?",
+    "answer": "Navigate to the Transactions page to see your complete transaction history. You can filter by type (All, Transfers, Payments, Deposits), view transaction details including reference numbers, amounts, and status, and search by date range. Each transaction shows the counterparty account name and number.",
+    "category": "transactions"
   },
   {
-    "id": "faq-11",
-    "category": "support",
-    "question": "How do I contact customer support?",
-    "answer": "You can reach NovaBank customer support via the AI Chat Assistant available 24/7 on your dashboard for immediate answers. For complex issues, email us at support@novabank.com or call 1-800-NOVABANK. Our support team is available Monday to Saturday, 8 AM to 10 PM EST."
+    "question": "Can I reverse a transaction?",
+    "answer": "Yes, completed transactions can be reversed through NovaBank. Go to the transaction details and click 'Reverse'. The reversal creates a new refund transaction that credits the original source account and debits the destination account. Only completed transactions can be reversed. Pending or failed transactions cannot be reversed.",
+    "category": "transactions"
   },
   {
-    "id": "faq-12",
-    "category": "cards",
-    "question": "How do I manage my debit/credit cards?",
-    "answer": "Card management features are available in the Cards section. You can view your virtual and physical cards, set spending limits, enable/disable international transactions, report lost or stolen cards, and request PIN changes in real-time."
+    "question": "What are the interest rates for savings accounts?",
+    "answer": "NovaBank offers competitive interest rates: Savings accounts earn 4.5% APY, Checking accounts earn 0.5% APY, Business accounts earn 2.0% APY, Fixed Deposit accounts earn 7.0% APY, and Investment accounts earn 6.0% APY. Interest is calculated daily and credited monthly.",
+    "category": "accounts"
   },
   {
-    "id": "faq-13",
-    "category": "interest",
-    "question": "How is interest calculated on my savings?",
-    "answer": "Interest on savings accounts is calculated daily and credited monthly at the end of each statement period. Our Savings account offers 4.5% APY, while Fixed Deposits earn up to 7.0% APY depending on the term length. You can track your interest earnings in the account details."
+    "question": "How do notifications work?",
+    "answer": "NovaBank provides real-time notifications for banking events including transaction completions, failed transactions, account creation, deposit receipts, payment due reminders, and security alerts. Notifications appear in the bell icon in the navbar and are delivered via Server-Sent Events (SSE) for instant updates.",
+    "category": "features"
   },
   {
-    "id": "faq-14",
-    "category": "fees",
-    "question": "What fees does NovaBank charge?",
-    "answer": "NovaBank believes in transparent banking. There are no monthly maintenance fees for Checking and Savings accounts. Wire transfers have a nominal fee of $25 domestic and $45 international. ATM withdrawals beyond 5 free transactions per month incur a $2 fee. Overdraft protection has a $35 fee per occurrence."
+    "question": "What is the AI assistant and how do I use it?",
+    "answer": "The NovaBank AI Assistant is an intelligent chatbot powered by Ollama (Llama 3.2) with RAG (Retrieval-Augmented Generation). Click the AI button in the bottom-right corner to open the chat. Ask questions about your accounts, transactions, banking products, or get financial advice. The AI uses a knowledge base of banking information to provide accurate answers.",
+    "category": "features"
   },
   {
-    "id": "faq-15",
-    "category": "tips",
-    "question": "How can I improve my financial health?",
-    "answer": "NovaBank's AI Insights can help! We recommend: 1) Maintain at least 3-6 months of expenses in your Savings account, 2) Set up automatic transfers to savings each payday, 3) Monitor your spending categories monthly, 4) Diversify your investments across different asset classes, and 5) Review and adjust your budget quarterly."
+    "question": "Does NovaBank support multiple currencies?",
+    "answer": "Yes, NovaBank supports multiple currencies including USD (US Dollar), EUR (Euro), GBP (British Pound), and INR (Indian Rupee). You can open accounts in different currencies and transfer between them. Currency exchange rates are applied for cross-currency transactions.",
+    "category": "accounts"
+  },
+  {
+    "question": "What is the difference between available balance and current balance?",
+    "answer": "Available balance is the amount you can immediately use for transactions, excluding any holds or pending transactions. Current balance is your total account balance including all funds. If you have holds on your account (e.g., pending transactions), your available balance will be less than your current balance. Available balance = Current balance - Holds.",
+    "category": "accounts"
+  },
+  {
+    "question": "How do I contact NovaBank support?",
+    "answer": "You can contact NovaBank support through: the AI chat assistant for instant help with common questions, email support at support@novabank.com, or visit our Help section in the footer. For urgent security concerns, use the emergency contact in your account settings.",
+    "category": "support"
+  },
+  {
+    "question": "What is the 50/30/20 budgeting rule?",
+    "answer": "The 50/30/20 rule is a popular budgeting guideline: 50% of your income goes to needs (rent, groceries, utilities, insurance), 30% to wants (dining out, entertainment, shopping), and 20% to savings and debt repayment. NovaBank's AI assistant can help you analyze your spending against this rule and provide personalized recommendations.",
+    "category": "financial_advice"
+  },
+  {
+    "question": "How do I set up an emergency fund?",
+    "answer": "Financial experts recommend maintaining an emergency fund covering 3-6 months of expenses. Start by calculating your monthly expenses, then set up automatic transfers from your checking to your savings account each month. NovaBank's savings account with 4.5% APY is ideal for emergency funds. Use the AI assistant for personalized savings goals.",
+    "category": "financial_advice"
+  },
+  {
+    "question": "What investment options does NovaBank offer?",
+    "answer": "NovaBank offers Investment accounts with 6.0% APY for portfolio management. You can also explore Fixed Deposit accounts with 7.0% APY for guaranteed returns. Our AI assistant provides portfolio insights and can help you understand asset allocation strategies including the recommended 60/30/10 split (stocks/bonds/alternatives).",
+    "category": "investing"
+  },
+  {
+    "question": "How does NovaBank protect against fraud?",
+    "answer": "NovaBank employs multiple fraud protection measures: real-time transaction monitoring, account lockout after suspicious activity, IP address tracking on transactions, device fingerprinting, unusual transaction pattern detection, and instant security alerts via notifications. Our AI-powered fraud detection system continuously monitors for suspicious activity.",
+    "category": "security"
+  },
+  {
+    "question": "What is a transaction reference number?",
+    "answer": "Every transaction on NovaBank is assigned a unique reference number (e.g., TXN12345678). This reference can be used to track transaction status, look up specific transactions, share with recipients for verification, and resolve any disputes. You can search for transactions by reference number on the Transactions page.",
+    "category": "transactions"
+  },
+  {
+    "question": "How do I enable overdraft protection on my account?",
+    "answer": "To enable overdraft protection, go to Account Details for the specific account, find the Account Settings section, and toggle the Overdraft Protection option. Set your desired overdraft limit amount. Note that overdraft protection is available for Checking and Business accounts. Enabling this feature prevents transaction declines when your balance is low.",
+    "category": "accounts"
+  },
+  {
+    "question": "What are the fees for NovaBank services?",
+    "answer": "NovaBank maintains a transparent fee structure: Account opening is free, standard transfers between accounts are free, no monthly maintenance fees for Checking and Savings accounts, ATM withdrawals are free at partner ATMs, foreign exchange transactions have a competitive spread, and early withdrawal from Fixed Deposits may incur a small penalty.",
+    "category": "fees"
+  },
+  {
+    "question": "How do I use the MCP tools for AI integration?",
+    "answer": "NovaBank provides MCP (Model Context Protocol) tools for AI integration. The available tools include: get_account_balance for checking balances, get_user_accounts for listing all accounts, get_recent_transactions for transaction history, get_total_balance for aggregated balances, and get_transaction_stats for analytics. These tools can be used with any MCP-compatible AI agent.",
+    "category": "features"
+  },
+  {
+    "question": "How do I optimize my savings growth?",
+    "answer": "To maximize your savings growth at NovaBank: 1) Use our Savings account with 4.5% APY for regular savings. 2) Consider Fixed Deposit accounts with 7.0% APY for funds you won't need immediately. 3) Set up automatic transfers on payday. 4) Use the 50/30/20 rule to ensure consistent saving. 5) Review and adjust monthly with the help of our AI assistant.",
+    "category": "financial_advice"
+  },
+  {
+    "question": "Can I schedule recurring payments?",
+    "answer": "Yes, NovaBank supports scheduled and recurring payments. You can set up automatic bill payments, schedule one-time future payments, and create recurring transfers between accounts. Manage your scheduled payments from the Dashboard or Transactions page. You'll receive notifications before scheduled payments are processed.",
+    "category": "transactions"
+  },
+  {
+    "question": "How do I upgrade my account type?",
+    "answer": "To change your account type, navigate to the Account Details page for the account you wish to modify, click on Account Settings, and select the new account type. Some changes (e.g., from Savings to Investment) may require additional verification. Interest rates will automatically adjust to match the new account type.",
+    "category": "accounts"
+  },
+  {
+    "question": "What is NovaBank's approach to retirement planning?",
+    "answer": "NovaBank helps with retirement planning through our Investment accounts offering 6.0% APY. If you invest $500 monthly with a 7% annual return, you could accumulate over $600,000 in 30 years. Our AI assistant can provide personalized retirement projections and help you understand compound interest benefits. Start early to maximize growth.",
+    "category": "financial_advice"
+  },
+  {
+    "question": "How do I manage my notification preferences?",
+    "answer": "NovaBank provides real-time notifications for all banking activities. You can view notifications by clicking the bell icon in the navbar. Notifications are organized by type (transactions, security, account updates) with color-coded icons. Mark notifications as read individually or all at once. The system automatically connects via SSE for instant delivery.",
+    "category": "features"
+  },
+  {
+    "question": "What currencies does NovaBank support for transfers?",
+    "answer": "NovaBank supports transfers in USD (US Dollar), EUR (Euro), GBP (British Pound), and INR (Indian Rupee). When transferring between accounts of different currencies, exchange rates are applied automatically. You can select your preferred currency when creating a new account or initiating a transfer.",
+    "category": "transactions"
+  },
+  {
+    "question": "How do I close my account?",
+    "answer": "To close a NovaBank account, go to Account Details, click on Account Settings, and select 'Close Account'. Before closing, ensure all pending transactions are completed and the balance is transferred to another account. Account closure is permanent and cannot be undone. You'll receive a confirmation once the account is closed.",
+    "category": "accounts"
   }
 ]

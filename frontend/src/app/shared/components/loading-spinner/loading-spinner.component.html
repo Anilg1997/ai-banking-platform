@@ -1,0 +1,6 @@
+<div class="spinner-overlay" [class.inline]="inline">
+  <div class="spinner-container">
+    <div class="spinner" [style.width.px]="size" [style.height.px]="size"></div>
+    <span class="spinner-text" *ngIf="message">{{ message }}</span>
+  </div>
+</div>

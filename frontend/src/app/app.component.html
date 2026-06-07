@@ -7,14 +7,25 @@
   <!-- Navigation Bar (hidden on auth pages) -->
   <nav class="navbar animate-fade-in" *ngIf="!isAuthPage">
     <div class="nav-container">
-      <div class="nav-brand">
+      <div class="nav-brand" routerLink="/dashboard">
         <span class="brand-icon">◆</span>
         <span class="brand-text">Nova<span class="brand-accent">Bank</span></span>
       </div>
-      <div class="nav-actions">
-        <button mat-icon-button class="nav-btn" matTooltip="Transactions" routerLink="/transactions">
+      <div class="nav-links">
+        <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+          <mat-icon class="nav-icon">dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-link" routerLink="/accounts" routerLinkActive="active">
+          <mat-icon class="nav-icon">account_balance_wallet</mat-icon>
+          <span>Accounts</span>
+        </a>
+        <a class="nav-link" routerLink="/transactions" routerLinkActive="active">
           <mat-icon class="nav-icon">receipt_long</mat-icon>
-        </button>
+          <span>Transactions</span>
+        </a>
+      </div>
+      <div class="nav-actions">
         <div class="notification-wrapper">
           <button mat-icon-button class="nav-btn" (click)="toggleNotifications()" matTooltip="Notifications">
             <mat-icon class="nav-icon">notifications_outline</mat-icon>
@@ -24,7 +35,10 @@
           <div class="notification-dropdown" *ngIf="showNotifications" (click)="$event.stopPropagation()">
             <div class="dropdown-header">
               <span class="dropdown-title">Notifications</span>
-              <button class="mark-read-btn" (click)="notificationService.markAllAsRead(authService.currentUser?.id || '').subscribe()">Mark all read</button>
+              <div class="dropdown-header-actions">
+                <button class="mark-read-btn" (click)="notificationService.markAllAsRead(authService.currentUser?.id || '').subscribe()">Mark all read</button>
+                <a routerLink="/notifications" class="view-all-link" (click)="closeNotifications()">View All</a>
+              </div>
             </div>
             <div class="dropdown-body">
               <div class="notif-item" *ngFor="let notif of notifications.slice(0, 10)" [class.unread]="!notif.read" (click)="notificationService.markAsRead(notif.id).subscribe()">
@@ -65,7 +79,7 @@
   <!-- Footer -->
   <footer class="footer animate-fade-in" *ngIf="!isAuthPage">
     <div class="footer-container">
-      <span class="footer-text">&copy; 2025 NovaBank. All rights reserved.</span>
+      <span class="footer-text">&copy; 2026 NovaBank. All rights reserved.</span>
       <div class="footer-links">
         <a href="#" class="footer-link">Privacy</a>
         <a href="#" class="footer-link">Terms</a>

@@ -74,7 +74,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
-  private closeNotifications(): void {
+  closeNotifications(): void {
     if (!this.showNotifications) return;
     this.showNotifications = false;
     // Mark all as read when closing

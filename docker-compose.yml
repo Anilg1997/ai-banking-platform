@@ -250,6 +250,27 @@ services:
     networks:
       - banking-network
 
+  # ============ AI Service ============
+
+  ai-service:
+    build:
+      context: ./ai/ai-service
+    container_name: banking-ai-service
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      OLLAMA_CHAT_MODEL: llama3.2
+      OLLAMA_EMBED_MODEL: nomic-embed-text
+      ACCOUNT_SERVICE_URL: http://account-service:8083
+      TRANSACTION_SERVICE_URL: http://transaction-service:8085
+      AUTH_SERVICE_URL: http://auth-service:8081
+      CORS_ORIGINS: http://localhost:4200,http://localhost:8080
+    ports:
+      - "8090:8090"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - banking-network
+
   # ============ Monitoring ============
 
   redis-commander:

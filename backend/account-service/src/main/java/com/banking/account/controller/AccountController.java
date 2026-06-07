@@ -4,7 +4,6 @@ import com.banking.account.dto.AccountRequest;
 import com.banking.account.dto.AccountResponse;
 import com.banking.account.dto.AccountSummary;
 import com.banking.account.model.Account;
-import com.banking.account.model.Account;
 import com.banking.account.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

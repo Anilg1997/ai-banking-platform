@@ -9,7 +9,7 @@ import { Account, ACCOUNT_TYPE_LABELS, ACCOUNT_STATUS_LABELS } from '../core/mod
   standalone: false,
   selector: 'app-account-detail',
   templateUrl: './account-detail.component.html',
-  styleUrls: ['./accounts.component.scss'],
+  styleUrls: ['./account-detail.component.scss'],
 })
 export class AccountDetailComponent implements OnInit, OnDestroy {
   account: Account | null = null;

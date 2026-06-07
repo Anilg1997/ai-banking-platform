@@ -12,7 +12,8 @@ export class JwtInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (request.url.includes('/api/auth/')) {
+    // Add token to all API requests (except AI service which runs independently)
+    if (request.url.includes('/api/') && !request.url.includes('/api/ai/')) {
       const token = this.authService.getToken();
       if (token) {
         request = this.addTokenToRequest(request, token);
