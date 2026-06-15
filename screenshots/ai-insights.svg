@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Inter','Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1628"/><stop offset="50%" stop-color="#0f1f3d"/><stop offset="100%" stop-color="#1a3a6b"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4a843"/><stop offset="100%" stop-color="#b8912e"/>
+    </linearGradient>
+    <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#667eea"/><stop offset="100%" stop-color="#764ba2"/>
+    </linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.3"/></filter>
+  </defs>
+  <rect width="1100" height="750" fill="url(#bgGrad)"/>
+
+  <!-- Header -->
+  <rect width="1100" height="60" fill="rgba(255,255,255,0.04)"/>
+  <text x="24" y="40" fill="#d4a843" font-size="22" font-weight="700">◆ Nova<span fill="white">Bank</span></text>
+  <text x="180" y="40" fill="#8ba3c7" font-size="13">Dashboard</text>
+  <text x="280" y="40" fill="#8ba3c7" font-size="13">Accounts</text>
+  <text x="370" y="40" fill="#8ba3c7" font-size="13">Transactions</text>
+  <text x="490" y="40" fill="#d4a843" font-size="13" font-weight="600">🤖 AI Insights</text>
+  <text x="590" y="40" fill="#8ba3c7" font-size="13">Notifications</text>
+
+  <!-- AI Insights Header -->
+  <text x="30" y="100" font-size="24" fill="white" font-weight="700">🤖 AI-Powered Financial Insights</text>
+  <text x="30" y="126" font-size="13" fill="#8ba3c7">Intelligent analysis of your banking data powered by RAG and Agent AI</text>
+
+  <!-- AI Summary Card -->
+  <rect x="30" y="145" rx="16" ry="16" width="640" height="130" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="30" y="145" rx="16" ry="16" width="6" height="130" fill="url(#aiGrad)"/>
+  <text x="56" y="178" font-size="14" fill="white" font-weight="600">🧠 AI Financial Summary</text>
+  <text x="56" y="200" font-size="12" fill="#c0d0e8">Based on your spending patterns over the last 3 months, here are key insights:</text>
+  <text x="56" y="222" font-size="12" fill="#8ba3c7">• 📊 Your monthly savings have increased by <tspan fill="#4ade80" font-weight="600">12.5%</tspan> compared to last quarter</text>
+  <text x="56" y="240" font-size="12" fill="#8ba3c7">• ⚠️ Dining & entertainment spending is <tspan fill="#fbbf24" font-weight="600">30% above</tspan> your budget threshold</text>
+  <text x="56" y="258" font-size="12" fill="#8ba3c7">• 💡 Recommended: Move ₹5,000 to your <tspan fill="#4ade80" font-weight="600">High-Yield Savings</tspan> account</text>
+
+  <!-- AI Chat widget (side) -->
+  <rect x="690" y="145" rx="16" ry="16" width="380" height="300" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#shadow)"/>
+  <text x="710" y="178" font-size="14" fill="white" font-weight="600">💬 Ask AI Assistant</text>
+  <rect x="710" y="192" rx="12" ry="12" width="340" height="80" fill="rgba(102,126,234,0.15)"/>
+  <text x="726" y="214" font-size="12" fill="white">I noticed a large transaction of ₹45,000</text>
+  <text x="726" y="232" font-size="12" fill="white">on Dec 15. Can you categorize this and</text>
+  <text x="726" y="250" font-size="12" fill="white">alert me about similar patterns?</text>
+  <rect x="710" y="280" rx="12" ry="12" width="340" height="90" fill="rgba(255,255,255,0.05)"/>
+  <text x="726" y="300" font-size="12" fill="#c0d0e8">🔍 Analyzing your transaction history...</text>
+  <text x="726" y="318" font-size="12" fill="#4ade80">✅ Transaction categorized: Electronics Purchase</text>
+  <text x="726" y="336" font-size="12" fill="#fbbf24">⚠️ Similar pattern detected: 3 large electronics</text>
+  <text x="726" y="352" font-size="12" fill="#fbbf24">   purchases in the last 2 months (Total: ₹1.2L)</text>
+
+  <!-- Insights Grid -->
+  <!-- Card 1: Spending Analysis -->
+  <rect x="30" y="295" rx="16" ry="16" width="310" height="200" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#shadow)"/>
+  <text x="50" y="326" font-size="14" fill="white" font-weight="600">📊 Spending Analysis</text>
+  <!-- Mini bar chart -->
+  <rect x="50" y="340" rx="4" ry="4" width="40" height="80" fill="rgba(212,168,67,0.3)"/>
+  <rect x="50" y="370" rx="4" ry="4" width="40" height="50" fill="rgba(212,168,67,0.6)"/>
+  <rect x="100" y="340" rx="4" ry="4" width="40" height="60" fill="rgba(102,126,234,0.3)"/>
+  <rect x="100" y="360" rx="4" ry="4" width="40" height="40" fill="rgba(102,126,234,0.6)"/>
+  <rect x="150" y="340" rx="4" ry="4" width="40" height="100" fill="rgba(248,113,113,0.3)"/>
+  <rect x="150" y="355" rx="4" ry="4" width="40" height="85" fill="rgba(248,113,113,0.6)"/>
+  <rect x="200" y="340" rx="4" ry="4" width="40" height="45" fill="rgba(74,222,128,0.3)"/>
+  <rect x="200" y="355" rx="4" ry="4" width="40" height="30" fill="rgba(74,222,128,0.6)"/>
+  <text x="58" y="440" font-size="9" fill="#8ba3c7">Jan</text>
+  <text x="108" y="440" font-size="9" fill="#8ba3c7">Feb</text>
+  <text x="158" y="440" font-size="9" fill="#8ba3c7">Mar</text>
+  <text x="208" y="440" font-size="9" fill="#8ba3c7">Apr</text>
+  <text x="50" y="470" font-size="11" fill="#4ade80" font-weight="500">▼ 8.3% MoM decrease</text>
+
+  <!-- Card 2: AI Recommendations -->
+  <rect x="360" y="295" rx="16" ry="16" width="310" height="200" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#shadow)"/>
+  <text x="380" y="326" font-size="14" fill="white" font-weight="600">💡 AI Recommendations</text>
+  <rect x="380" y="340" rx="8" ry="8" width="270" height="36" fill="rgba(74,222,128,0.1)"/>
+  <text x="396" y="356" font-size="11" fill="#4ade80">💰 Move ₹5,000 to High-Yield Savings</text>
+  <rect x="380" y="380" rx="8" ry="8" width="270" height="36" fill="rgba(251,191,36,0.1)"/>
+  <text x="396" y="396" font-size="11" fill="#fbbf24">📊 Reduce dining budget by 20%</text>
+  <rect x="380" y="420" rx="8" ry="8" width="270" height="36" fill="rgba(102,126,234,0.1)"/>
+  <text x="396" y="436" font-size="11" fill="#818cf8">🏦 Consider a Fixed Deposit at 7.2% p.a.</text>
+  <rect x="380" y="460" rx="8" ry="8" width="270" height="22" fill="rgba(248,113,113,0.1)"/>
+  <text x="396" y="476" font-size="11" fill="#f87171">🔔 Fraud Alert: Unusual login from new device</text>
+
+  <!-- Bottom: RAG Knowledge Base -->
+  <rect x="30" y="515" rx="16" ry="16" width="1040" height="200" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#shadow)"/>
+  <text x="56" y="548" font-size="16" fill="white" font-weight="600">📚 RAG Knowledge Base — Banking FAQ</text>
+  <text x="56" y="570" font-size="12" fill="#8ba3c7">AI searches through 30+ banking documents to answer your questions in real-time</text>
+
+  <!-- FAQ items -->
+  <rect x="56" y="585" rx="8" ry="8" width="480" height="36" fill="rgba(255,255,255,0.04)"/>
+  <text x="72" y="609" font-size="12" fill="#c0d0e8">Q: What are the current home loan interest rates?</text>
+  <rect x="56" y="625" rx="8" ry="8" width="480" height="36" fill="rgba(255,255,255,0.04)"/>
+  <text x="72" y="649" font-size="12" fill="#c0d0e8">Q: How do I activate international transactions?</text>
+  <rect x="56" y="665" rx="8" ry="8" width="480" height="36" fill="rgba(255,255,255,0.04)"/>
+  <text x="72" y="689" font-size="12" fill="#c0d0e8">Q: What is my credit card reward balance?</text>
+
+  <!-- Answer panel -->
+  <rect x="560" y="585" rx="12" ry="12" width="490" height="116" fill="rgba(102,126,234,0.08)"/>
+  <text x="580" y="608" font-size="12" fill="#c0d0e8" font-weight="600">A: Home Loan Rates</text>
+  <text x="580" y="628" font-size="11" fill="#8ba3c7">Based on our latest documents (updated Dec 2024):</text>
+  <text x="580" y="648" font-size="11" fill="#8ba3c7">• Salaried: 8.50% - 9.25% p.a.</text>
+  <text x="580" y="666" font-size="11" fill="#8ba3c7">• Self-employed: 8.75% - 9.50% p.a.</text>
+  <text x="580" y="686" font-size="11" fill="#4ade80">➡ Ready to apply? Check your eligibility now!</text>
+</svg>

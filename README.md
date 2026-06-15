@@ -13,6 +13,7 @@
 | **Transactions** — Transaction list with filters, monthly summary, send money form | ![Transactions](screenshots/transactions.svg) |
 | **Notifications** — Notification list with types (deposit, fraud alert, payments) | ![Notifications](screenshots/notifications.svg) |
 | **AI Chat** — Floating AI assistant with banking queries and suggestions | ![AI Chat](screenshots/ai-chat.svg) |
+| **AI Insights** — AI-powered financial analysis with RAG knowledge base and smart recommendations | ![AI Insights](screenshots/ai-insights.svg) |
 
 ## 🌟 Tech Stack
 
