@@ -2,6 +2,18 @@
 
 > **Next-Generation Banking Platform** with Microservices, AI Agents, RAG, and Modern Architecture
 
+## 📸 Screenshots
+
+| Page | Preview |
+|------|---------|
+| **Login** — Dark theme login with SSO options | ![Login](screenshots/login.svg) |
+| **Register** — Registration form with password strength meter | ![Register](screenshots/register.svg) |
+| **Dashboard** — Stats cards, recent transactions, investment portfolio, AI insights | ![Dashboard](screenshots/dashboard.svg) |
+| **Accounts** — Account cards with balances and create account action | ![Accounts](screenshots/accounts.svg) |
+| **Transactions** — Transaction list with filters, monthly summary, send money form | ![Transactions](screenshots/transactions.svg) |
+| **Notifications** — Notification list with types (deposit, fraud alert, payments) | ![Notifications](screenshots/notifications.svg) |
+| **AI Chat** — Floating AI assistant with banking queries and suggestions | ![AI Chat](screenshots/ai-chat.svg) |
+
 ## 🌟 Tech Stack
 
 ### Backend

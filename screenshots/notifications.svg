@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Inter','Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a1628"/><stop offset="50%" stop-color="#0f1f3d"/><stop offset="100%" stop-color="#1a3a6b"/></linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#d4a843"/><stop offset="100%" stop-color="#b8912e"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.3"/></filter>
+  </defs>
+  <rect width="1100" height="750" fill="url(#bgGrad)"/>
+  <circle cx="1000" cy="50" r="250" fill="rgba(212,168,67,0.05)" filter="url(#s)"/>
+  <!-- Navbar -->
+  <rect width="1100" height="68" fill="rgba(10,22,40,0.85)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <text x="30" y="42" fill="#d4a843" font-size="22">◆</text>
+  <text x="56" y="42" fill="white" font-size="20" font-weight="700">NovaBank</text>
+  <circle cx="1074" cy="34" r="18" fill="url(#goldGrad)"/><text x="1074" y="39" fill="#0a1628" font-size="11" text-anchor="middle" font-weight="700">AK</text>
+  <!-- Header -->
+  <text x="30" y="104" fill="white" font-size="28" font-weight="700">Notifications</text>
+  <text x="30" y="128" fill="#8ba3c7" font-size="14">Stay updated with your banking activity</text>
+  <rect x="860" y="96" rx="12" ry="12" width="210" height="40" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="900" y="122" fill="#d4a843" font-size="13" font-weight="600">✓ Mark All Read</text>
+  <!-- Filter tabs -->
+  <rect x="30" y="156" rx="10" ry="10" width="80" height="34" fill="rgba(212,168,67,0.15)"/><text x="70" y="178" fill="#d4a843" font-size="13" text-anchor="middle" font-weight="600">All</text>
+  <rect x="116" y="156" rx="10" ry="10" width="90" height="34" fill="rgba(255,255,255,0.05)"/><text x="161" y="178" fill="#8ba3c7" font-size="13" text-anchor="middle">Unread</text>
+  <!-- Notification items -->
+  <rect x="30" y="210" rx="14" ry="14" width="1040" height="68" fill="rgba(212,168,67,0.04)" stroke="rgba(212,168,67,0.15)" stroke-width="1" filter="url(#s)"/>
+  <rect x="46" y="222" rx="8" ry="8" width="36" height="36" fill="rgba(34,197,94,0.1)"/><text x="64" y="246" fill="#22c55e" font-size="16" text-anchor="middle">🏦</text>
+  <text x="96" y="240" fill="white" font-size="14" font-weight="600">Salary Deposit Received</text>
+  <text x="96" y="258" fill="#8ba3c7" font-size="12">Your monthly salary of $8,450.00 has been deposited to your Primary Checking account.</text>
+  <text x="960" y="240" fill="#5a7298" font-size="11">5 min ago</text>
+
+  <rect x="30" y="290" rx="14" ry="14" width="1040" height="68" fill="rgba(212,168,67,0.04)" stroke="rgba(212,168,67,0.15)" stroke-width="1" filter="url(#s)"/>
+  <rect x="46" y="302" rx="8" ry="8" width="36" height="36" fill="rgba(245,158,11,0.1)"/><text x="64" y="326" fill="#f59e0b" font-size="16" text-anchor="middle">🛡</text>
+  <text x="96" y="320" fill="white" font-size="14" font-weight="600">Suspicious Login Attempt</text>
+  <text x="96" y="338" fill="#8ba3c7" font-size="12">We detected a login attempt from an unrecognized device in Mumbai, India. Was this you?</text>
+  <text x="960" y="320" fill="#5a7298" font-size="11">1 hour ago</text>
+
+  <rect x="30" y="370" rx="14" ry="14" width="1040" height="68" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1" filter="url(#s)"/>
+  <rect x="46" y="382" rx="8" ry="8" width="36" height="36" fill="rgba(59,130,246,0.1)"/><text x="64" y="406" fill="#60a5fa" font-size="16" text-anchor="middle">💳</text>
+  <text x="96" y="400" fill="white" font-size="14" font-weight="500">Credit Card Payment Due</text>
+  <text x="96" y="418" fill="#8ba3c7" font-size="12">Your Platinum Rewards card payment of $1,450 is due in 5 days. Set up auto-pay to avoid late fees.</text>
+  <text x="960" y="400" fill="#5a7298" font-size="11">1 day ago</text>
+
+  <rect x="30" y="450" rx="14" ry="14" width="1040" height="68" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1" filter="url(#s)"/>
+  <rect x="46" y="462" rx="8" ry="8" width="36" height="36" fill="rgba(34,197,94,0.1)"/><text x="64" y="486" fill="#22c55e" font-size="16" text-anchor="middle">📈</text>
+  <text x="96" y="480" fill="white" font-size="14" font-weight="500">Investment Update - S&P 500 ETF</text>
+  <text x="96" y="498" fill="#8ba3c7" font-size="12">Your S&P 500 ETF investment has grown 3.2% this week. Current value: $28,450.00.</text>
+  <text x="960" y="480" fill="#5a7298" font-size="11">2 days ago</text>
+
+  <rect x="30" y="530" rx="14" ry="14" width="1040" height="68" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="1" filter="url(#s)"/>
+  <rect x="46" y="542" rx="8" ry="8" width="36" height="36" fill="rgba(245,158,11,0.1)"/><text x="64" y="566" fill="#f59e0b" font-size="16" text-anchor="middle">⚡</text>
+  <text x="96" y="560" fill="white" font-size="14" font-weight="500">Electric Bill Auto-Paid</text>
+  <text x="96" y="578" fill="#8ba3c7" font-size="12">Your electric bill of $145.50 has been paid automatically from your Primary Checking account.</text>
+  <text x="960" y="560" fill="#5a7298" font-size="11">3 days ago</text>
+</svg>

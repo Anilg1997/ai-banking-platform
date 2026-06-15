@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Inter','Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="50%" stop-color="#0f1f3d"/>
+      <stop offset="100%" stop-color="#1a3a6b"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4a843"/>
+      <stop offset="100%" stop-color="#b8912e"/>
+    </linearGradient>
+    <filter id="cardShadow"><feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#000" flood-opacity="0.4"/></filter>
+  </defs>
+  <rect width="1100" height="750" fill="url(#bgGrad)"/>
+  <circle cx="900" cy="100" r="250" fill="rgba(212,168,67,0.06)" filter="url(#cardShadow)"/>
+  <circle cx="200" cy="600" r="200" fill="rgba(59,130,246,0.04)" filter="url(#cardShadow)"/>
+
+  <rect x="320" y="60" rx="20" ry="20" width="460" height="660" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#cardShadow)"/>
+  
+  <!-- Brand -->
+  <text x="550" y="110" fill="#d4a843" font-size="24" text-anchor="middle">◆</text>
+  <text x="550" y="140" fill="white" font-size="22" font-weight="700" text-anchor="middle">NovaBank</text>
+  <text x="550" y="162" fill="#8ba3c7" font-size="13" text-anchor="middle">Create your premium banking account</text>
+
+  <!-- First Name + Last Name row -->
+  <rect x="348" y="190" rx="12" ry="12" width="200" height="52" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="364" y="210" fill="#8ba3c7" font-size="10" font-weight="500">First Name</text>
+  <text x="364" y="230" fill="white" font-size="13">Anil</text>
+
+  <rect x="564" y="190" rx="12" ry="12" width="200" height="52" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="580" y="210" fill="#8ba3c7" font-size="10" font-weight="500">Last Name</text>
+  <text x="580" y="230" fill="white" font-size="13">Kumar</text>
+
+  <!-- Username -->
+  <rect x="348" y="256" rx="12" ry="12" width="416" height="52" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="364" y="276" fill="#8ba3c7" font-size="10" font-weight="500">Username</text>
+  <text x="364" y="296" fill="white" font-size="13">anil_kumar</text>
+
+  <!-- Email -->
+  <rect x="348" y="322" rx="12" ry="12" width="416" height="52" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="364" y="342" fill="#8ba3c7" font-size="10" font-weight="500">Email</text>
+  <text x="364" y="362" fill="white" font-size="13">anil@novabank.com</text>
+
+  <!-- Phone -->
+  <rect x="348" y="388" rx="12" ry="12" width="416" height="52" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="364" y="408" fill="#8ba3c7" font-size="10" font-weight="500">Phone Number</text>
+  <text x="364" y="428" fill="white" font-size="13">+1 (555) 123-4567</text>
+
+  <!-- Password -->
+  <rect x="348" y="454" rx="12" ry="12" width="416" height="52" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="364" y="474" fill="#8ba3c7" font-size="10" font-weight="500">Password</text>
+  <text x="364" y="494" fill="white" font-size="13">•••••••••••</text>
+
+  <!-- Password strength bar -->
+  <rect x="348" y="510" rx="4" ry="4" width="416" height="4" fill="rgba(255,255,255,0.1)"/>
+  <rect x="348" y="510" rx="4" ry="4" width="312" height="4" fill="#22c55e"/>
+  <text x="770" y="514" fill="#22c55e" font-size="10" font-weight="600">Strong</text>
+
+  <!-- Agree Terms -->
+  <rect x="348" y="530" rx="3" ry="3" width="16" height="16" fill="rgba(212,168,67,0.2)" stroke="#d4a843" stroke-width="1"/>
+  <text x="356" y="543" fill="#d4a843" font-size="11">✓</text>
+  <text x="372" y="543" fill="#8ba3c7" font-size="12">I agree to the Terms of Service and Privacy Policy</text>
+
+  <!-- Create Account button -->
+  <rect x="348" y="570" rx="12" ry="12" width="416" height="52" fill="url(#goldGrad)"/>
+  <text x="556" y="603" fill="#0a1628" font-size="15" font-weight="700" text-anchor="middle">Create Account</text>
+
+  <!-- Sign In link -->
+  <text x="550" y="648" fill="#8ba3c7" font-size="13" text-anchor="middle">Already have an account?</text>
+  <text x="550" y="672" fill="#d4a843" font-size="14" font-weight="600" text-anchor="middle" text-decoration="underline">Sign In</text>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Inter','Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a1628"/><stop offset="50%" stop-color="#0f1f3d"/><stop offset="100%" stop-color="#1a3a6b"/></linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#d4a843"/><stop offset="100%" stop-color="#b8912e"/></linearGradient>
+    <linearGradient id="checkingGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1e40af"/><stop offset="100%" stop-color="#3b82f6"/></linearGradient>
+    <linearGradient id="savingsGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#065f46"/><stop offset="100%" stop-color="#22c55e"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.3"/></filter>
+  </defs>
+  <rect width="1100" height="750" fill="url(#bgGrad)"/>
+  <circle cx="1000" cy="50" r="250" fill="rgba(212,168,67,0.05)" filter="url(#s)"/>
+
+  <!-- Navbar -->
+  <rect width="1100" height="68" fill="rgba(10,22,40,0.85)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <text x="30" y="42" fill="#d4a843" font-size="22">◆</text>
+  <text x="56" y="42" fill="white" font-size="20" font-weight="700">NovaBank</text>
+  <rect x="340" y="18" rx="10" ry="10" height="32" width="100" fill="rgba(255,255,255,0.05)"/><text x="362" y="38" fill="#8ba3c7" font-size="12">📊 Dashboard</text>
+  <rect x="446" y="18" rx="10" ry="10" height="32" width="96" fill="rgba(212,168,67,0.1)"/><text x="468" y="38" fill="#d4a843" font-size="12">👛 Accounts</text>
+  <rect x="548" y="18" rx="10" ry="10" height="32" width="110" fill="rgba(255,255,255,0.05)"/><text x="572" y="38" fill="#8ba3c7" font-size="12">📋 Transactions</text>
+  <circle cx="1074" cy="34" r="18" fill="url(#goldGrad)"/><text x="1074" y="39" fill="#0a1628" font-size="11" text-anchor="middle" font-weight="700">AK</text>
+
+  <!-- Header -->
+  <text x="30" y="104" fill="white" font-size="28" font-weight="700">My Accounts</text>
+  <text x="30" y="128" fill="#8ba3c7" font-size="14">View and manage all your banking accounts</text>
+  <rect x="890" y="96" rx="12" ry="12" width="180" height="40" fill="url(#goldGrad)"/>
+  <text x="920" y="122" fill="#0a1628" font-size="13" font-weight="600">+ New Account</text>
+
+  <!-- Account Cards -->
+  <rect x="30" y="156" rx="20" ry="20" width="520" height="170" fill="url(#checkingGrad)" filter="url(#s)"/>
+  <text x="50" y="190" fill="rgba(255,255,255,0.7)" font-size="12" font-weight="500">CHECKING ACCOUNT</text>
+  <text x="50" y="218" fill="white" font-size="28" font-weight="700">$45,230.89</text>
+  <text x="50" y="240" fill="rgba(255,255,255,0.6)" font-size="12">Primary Checking · ...4582</text>
+  <text x="50" y="268" fill="rgba(255,255,255,0.5)" font-size="11">Available: $45,230.89</text>
+  <text x="380" y="190" fill="rgba(255,255,255,0.7)" font-size="11">Active</text>
+  <rect x="440" y="178" rx="6" ry="6" width="80" height="20" fill="rgba(34,197,94,0.2)" stroke="rgba(34,197,94,0.4)" stroke-width="1"/>
+  <text x="455" y="193" fill="#22c55e" font-size="10" font-weight="600">ACTIVE</text>
+
+  <rect x="570" y="156" rx="20" ry="20" width="500" height="170" fill="url(#savingsGrad)" filter="url(#s)"/>
+  <text x="590" y="190" fill="rgba(255,255,255,0.7)" font-size="12" font-weight="500">SAVINGS ACCOUNT</text>
+  <text x="590" y="218" fill="white" font-size="28" font-weight="700">$89,450.00</text>
+  <text x="590" y="240" fill="rgba(255,255,255,0.6)" font-size="12">High-Yield Savings · ...7891</text>
+  <text x="590" y="268" fill="rgba(255,255,255,0.5)" font-size="11">APY: 4.5% | Available: $89,450.00</text>
+  <rect x="960" y="178" rx="6" ry="6" width="80" height="20" fill="rgba(34,197,94,0.2)" stroke="rgba(34,197,94,0.4)" stroke-width="1"/>
+  <text x="975" y="193" fill="#22c55e" font-size="10" font-weight="600">ACTIVE</text>
+
+  <rect x="30" y="346" rx="20" ry="20" width="340" height="170" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#s)"/>
+  <text x="50" y="382" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="500">BUSINESS ACCOUNT</text>
+  <text x="50" y="412" fill="white" font-size="24" font-weight="700">$105,300.00</text>
+  <text x="50" y="434" fill="#8ba3c7" font-size="12">Business Pro · ...3345</text>
+  <text x="50" y="462" fill="#5a7298" font-size="11">Available: $105,300.00</text>
+  <rect x="260" y="368" rx="6" ry="6" width="80" height="20" fill="rgba(34,197,94,0.2)" stroke="rgba(34,197,94,0.4)" stroke-width="1"/>
+  <text x="275" y="383" fill="#22c55e" font-size="10" font-weight="600">ACTIVE</text>
+
+  <rect x="390" y="346" rx="20" ry="20" width="340" height="170" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#s)"/>
+  <text x="410" y="382" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="500">CREDIT CARD</text>
+  <text x="410" y="412" fill="white" font-size="24" font-weight="700">$4,250.00</text>
+  <text x="410" y="434" fill="#8ba3c7" font-size="12">Platinum Rewards · ...9912</text>
+  <text x="410" y="462" fill="#5a7298" font-size="11">Available Credit: $15,750.00</text>
+  <rect x="620" y="368" rx="6" ry="6" width="80" height="20" fill="rgba(245,158,11,0.2)" stroke="rgba(245,158,11,0.4)" stroke-width="1"/>
+  <text x="635" y="383" fill="#f59e0b" font-size="10" font-weight="600">PENDING</text>
+
+  <rect x="750" y="346" rx="20" ry="20" width="320" height="170" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#s)"/>
+  <text x="770" y="382" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="500">FIXED DEPOSIT</text>
+  <text x="770" y="412" fill="white" font-size="24" font-weight="700">$50,000.00</text>
+  <text x="770" y="434" fill="#8ba3c7" font-size="12">1-Year FD · ...6654</text>
+  <text x="770" y="462" fill="#5a7298" font-size="11">Matures: Dec 15, 2026 | 7.2% p.a.</text>
+  <rect x="960" y="368" rx="6" ry="6" width="80" height="20" fill="rgba(59,130,246,0.2)" stroke="rgba(59,130,246,0.4)" stroke-width="1"/>
+  <text x="975" y="383" fill="#60a5fa" font-size="10" font-weight="600">ACTIVE</text>
+</svg>

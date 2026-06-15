@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 750" font-family="'Inter','Segoe UI',sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#0a1628"/><stop offset="50%" stop-color="#0f1f3d"/><stop offset="100%" stop-color="#1a3a6b"/></linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#d4a843"/><stop offset="100%" stop-color="#b8912e"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.3"/></filter>
+    <filter id="glow"><feDropShadow dx="0" dy="0" stdDeviation="12" flood-color="#d4a843" flood-opacity="0.15"/></filter>
+  </defs>
+  <rect width="1100" height="750" fill="url(#bgGrad)"/>
+  <circle cx="1000" cy="50" r="250" fill="rgba(212,168,67,0.05)" filter="url(#s)"/>
+  <circle cx="100" cy="700" r="200" fill="rgba(59,130,246,0.03)" filter="url(#s)"/>
+
+  <!-- Navbar -->
+  <rect width="1100" height="68" fill="rgba(10,22,40,0.85)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <text x="30" y="42" fill="#d4a843" font-size="22">◆</text>
+  <text x="56" y="42" fill="white" font-size="20" font-weight="700">Nova</text><text x="102" y="42" fill="#d4a843" font-size="20" font-weight="700" text-anchor="middle">Bank</text>
+  <!-- Nav links -->
+  <rect x="340" y="18" rx="10" ry="10" height="32" width="100" fill="rgba(212,168,67,0.1)"/><text x="362" y="38" fill="#d4a843" font-size="12" font-weight="500">📊 Dashboard</text>
+  <rect x="446" y="18" rx="10" ry="10" height="32" width="96" fill="rgba(255,255,255,0.05)"/><text x="468" y="38" fill="#8ba3c7" font-size="12">👛 Accounts</text>
+  <rect x="548" y="18" rx="10" ry="10" height="32" width="110" fill="rgba(255,255,255,0.05)"/><text x="572" y="38" fill="#8ba3c7" font-size="12">📋 Transactions</text>
+
+  <!-- Nav right: notifications, settings, avatar -->
+  <circle cx="1000" cy="34" r="16" fill="rgba(255,255,255,0.05)"/><text x="1000" y="39" fill="#8ba3c7" font-size="14" text-anchor="middle">🔔</text>
+  <circle cx="1028" cy="34" r="12" fill="#ef4444"/><text x="1028" y="38" fill="white" font-size="8" text-anchor="middle" font-weight="700">3</text>
+  <circle cx="1050" cy="34" r="16" fill="rgba(255,255,255,0.05)"/><text x="1050" y="39" fill="#8ba3c7" font-size="14" text-anchor="middle">⚙</text>
+  <circle cx="1074" cy="34" r="18" fill="url(#goldGrad)"/><text x="1074" y="39" fill="#0a1628" font-size="11" text-anchor="middle" font-weight="700">AK</text>
+
+  <text x="30" y="104" fill="white" font-size="28" font-weight="700">Good morning, Anil</text>
+  <text x="30" y="128" fill="#8ba3c7" font-size="14">Here's your financial overview for today</text>
+
+  <!-- Quick Actions -->
+  <rect x="760" y="88" rx="12" ry="12" height="40" width="130" fill="url(#goldGrad)"/><text x="790" y="114" fill="#0a1628" font-size="12" font-weight="600">👛 Accounts</text>
+  <rect x="900" y="88" rx="12" ry="12" height="40" width="90" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><text x="922" y="114" fill="#8ba3c7" font-size="11">↔ Transfer</text>
+  <rect x="996" y="88" rx="12" ry="12" height="40" width="86" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><text x="1016" y="114" fill="#8ba3c7" font-size="11">+ Deposit</text>
+
+  <!-- Stats Cards -->
+  <rect x="30" y="150" rx="20" ry="20" width="250" height="90" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#s)"/>
+  <rect x="50" y="168" rx="16" ry="16" width="52" height="52" fill="rgba(59,130,246,0.15)"/><text x="76" y="202" fill="#60a5fa" font-size="22" text-anchor="middle">👛</text>
+  <text x="116" y="188" fill="#8ba3c7" font-size="11">Total Balance</text>
+  <text x="116" y="212" fill="white" font-size="20" font-weight="700">$247,890.32</text>
+
+  <rect x="300" y="150" rx="20" ry="20" width="250" height="90" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#s)"/>
+  <rect x="320" y="168" rx="16" ry="16" width="52" height="52" fill="rgba(34,197,94,0.15)"/><text x="346" y="202" fill="#4ade80" font-size="22" text-anchor="middle">📈</text>
+  <text x="386" y="188" fill="#8ba3c7" font-size="11">Monthly Income</text>
+  <text x="386" y="212" fill="white" font-size="20" font-weight="700">$18,240.00</text>
+  <text x="386" y="228" fill="#22c55e" font-size="10" font-weight="500">+8.2% vs last month</text>
+
+  <rect x="570" y="150" rx="20" ry="20" width="250" height="90" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#s)"/>
+  <rect x="590" y="168" rx="16" ry="16" width="52" height="52" fill="rgba(239,68,68,0.15)"/><text x="616" y="202" fill="#f87171" font-size="22" text-anchor="middle">📉</text>
+  <text x="656" y="188" fill="#8ba3c7" font-size="11">Monthly Expenses</text>
+  <text x="656" y="212" fill="white" font-size="20" font-weight="700">$8,920.50</text>
+  <text x="656" y="228" fill="#ef4444" font-size="10" font-weight="500">-3.1% vs last month</text>
+
+  <rect x="840" y="150" rx="20" ry="20" width="250" height="90" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#s)"/>
+  <rect x="860" y="168" rx="16" ry="16" width="52" height="52" fill="rgba(212,168,67,0.15)"/><text x="886" y="202" fill="#d4a843" font-size="22" text-anchor="middle">💰</text>
+  <text x="926" y="188" fill="#8ba3c7" font-size="11">Total Savings</text>
+  <text x="926" y="212" fill="white" font-size="20" font-weight="700">$89,450.00</text>
+  <text x="926" y="228" fill="#22c55e" font-size="10" font-weight="500">+15.3% this year</text>
+
+  <!-- Dashboard Grid: Left column (Transactions) -->
+  <rect x="30" y="262" rx="20" ry="20" width="520" height="300" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#s)"/>
+  <text x="50" y="298" fill="white" font-size="16" font-weight="600">Recent Transactions</text>
+  <text x="480" y="298" fill="#d4a843" font-size="12">View All →</text>
+
+  <!-- Transaction items -->
+  <rect x="50" y="316" rx="10" ry="10" width="480" height="40" fill="rgba(255,255,255,0.02)"/>
+  <text x="68" y="342" fill="white" font-size="13">🏦 Salary Deposit</text>
+  <text x="240" y="342" fill="#5a7298" font-size="11">Today, 9:30 AM</text>
+  <text x="460" y="342" fill="#22c55e" font-size="14" font-weight="600">+$8,450.00</text>
+
+  <rect x="50" y="360" rx="10" ry="10" width="480" height="40" fill="rgba(255,255,255,0.02)"/>
+  <text x="68" y="386" fill="white" font-size="13">🛒 Amazon Shopping</text>
+  <text x="240" y="386" fill="#5a7298" font-size="11">Yesterday</text>
+  <text x="460" y="386" fill="white" font-size="14" font-weight="600">-$234.99</text>
+
+  <rect x="50" y="404" rx="10" ry="10" width="480" height="40" fill="rgba(255,255,255,0.02)"/>
+  <text x="68" y="430" fill="white" font-size="13">⚡ Electric Bill</text>
+  <text x="240" y="430" fill="#5a7298" font-size="11">2 days ago</text>
+  <text x="460" y="430" fill="white" font-size="14" font-weight="600">-$145.50</text>
+
+  <rect x="50" y="448" rx="10" ry="10" width="480" height="40" fill="rgba(255,255,255,0.02)"/>
+  <text x="68" y="474" fill="white" font-size="13">💼 Freelance Payment</text>
+  <text x="240" y="474" fill="#5a7298" font-size="11">3 days ago</text>
+  <text x="460" y="474" fill="#22c55e" font-size="14" font-weight="600">+$2,200.00</text>
+
+  <rect x="50" y="492" rx="10" ry="10" width="480" height="40" fill="rgba(255,255,255,0.02)"/>
+  <text x="68" y="518" fill="white" font-size="13">📺 Netflix Subscription</text>
+  <text x="240" y="518" fill="#5a7298" font-size="11">5 days ago</text>
+  <text x="460" y="518" fill="white" font-size="14" font-weight="600">-$19.99</text>
+
+  <!-- Dashboard Grid: Right column (Investment Portfolio) -->
+  <rect x="570" y="262" rx="20" ry="20" width="510" height="300" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#s)"/>
+  <text x="590" y="298" fill="white" font-size="16" font-weight="600">Investment Portfolio</text>
+  <text x="1020" y="298" fill="#d4a843" font-size="12">Manage →</text>
+
+  <text x="590" y="332" fill="white" font-size="13">S&amp;P 500 ETF</text>
+  <text x="590" y="350" fill="#5a7298" font-size="11">45 shares</text>
+  <text x="960" y="332" fill="white" font-size="14" font-weight="600">$28,450</text>
+  <text x="960" y="350" fill="#22c55e" font-size="11" font-weight="500">+3.2%</text>
+
+  <line x1="590" y1="366" x2="1060" y2="366" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <text x="590" y="386" fill="white" font-size="13">Tech Growth Fund</text>
+  <text x="590" y="404" fill="#5a7298" font-size="11">120 shares</text>
+  <text x="960" y="386" fill="white" font-size="14" font-weight="600">$18,240</text>
+  <text x="960" y="404" fill="#ef4444" font-size="11" font-weight="500">-1.5%</text>
+
+  <line x1="590" y1="420" x2="1060" y2="420" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <text x="590" y="440" fill="white" font-size="13">Government Bonds</text>
+  <text x="590" y="458" fill="#5a7298" font-size="11">50 shares</text>
+  <text x="960" y="440" fill="white" font-size="14" font-weight="600">$12,500</text>
+  <text x="960" y="458" fill="#22c55e" font-size="11" font-weight="500">+0.8%</text>
+
+  <line x1="590" y1="474" x2="1060" y2="474" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <text x="590" y="494" fill="white" font-size="13">Gold ETF</text>
+  <text x="590" y="512" fill="#5a7298" font-size="11">30 shares</text>
+  <text x="960" y="494" fill="white" font-size="14" font-weight="600">$9,850</text>
+  <text x="960" y="512" fill="#22c55e" font-size="11" font-weight="500">+2.1%</text>
+
+  <line x1="590" y1="528" x2="1060" y2="528" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <text x="590" y="548" fill="white" font-size="13">AI Innovation Fund</text>
+  <text x="590" y="566" fill="#5a7298" font-size="11">75 shares</text>
+  <text x="960" y="548" fill="white" font-size="14" font-weight="600">$15,600</text>
+  <text x="960" y="566" fill="#22c55e" font-size="11" font-weight="500">+5.8%</text>
+
+  <!-- Row 2: AI Insights -->
+  <rect x="30" y="582" rx="20" ry="20" width="1050" height="80" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="1" filter="url(#s)"/>
+  <text x="50" y="612" fill="#d4a843" font-size="18">✨</text>
+  <text x="78" y="612" fill="white" font-size="16" font-weight="600">AI Insights</text>
+  <rect x="160" y="598" rx="10" ry="10" width="80" height="20" fill="rgba(212,168,67,0.1)" stroke="rgba(212,168,67,0.2)" stroke-width="1"/>
+  <text x="175" y="613" fill="#d4a843" font-size="9" font-weight="500">Powered by Ollama</text>
+  <text x="50" y="644" fill="#8ba3c7" font-size="13">💡 You spent 15% more on dining this month. Consider setting a budget of $300 for next month.</text>
+</svg>
