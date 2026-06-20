@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: '/api',
-  aiApiUrl: '/api',
+  apiUrl: '',
+  aiApiUrl: '',
   authApiUrl: '/api/auth',
   appName: 'NovaBank',
   appVersion: '3.0.0',

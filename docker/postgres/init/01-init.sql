@@ -13,3 +13,5 @@ GRANT CONNECT ON DATABASE banking_accounts TO monitoring_user;
 GRANT CONNECT ON DATABASE banking_transactions TO monitoring_user;
 GRANT CONNECT ON DATABASE banking_notifications TO monitoring_user;
 GRANT CONNECT ON DATABASE banking_loans TO monitoring_user;
+GRANT CONNECT ON DATABASE banking_cards TO monitoring_user;
+GRANT CONNECT ON DATABASE banking_agents TO monitoring_user;

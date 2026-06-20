@@ -355,6 +355,20 @@ services:
 
   # ============ Monitoring ============
 
+  # ============ Frontend ============
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: banking-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - banking-network
+
   redis-commander:
     image: rediscommander/redis-commander:latest
     container_name: banking-redis-commander
