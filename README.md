@@ -301,23 +301,26 @@ The card-service implements a complete credit card management system:
 - Load testing and optimization
 - Security audit
 
-## Screenshots
+## Screenshots (Live from Application)
 
-| Feature | Description |
-|---------|-------------|
-| **Login** | Dark theme login with SSO options |
-| **Dashboard** | Stats cards, accounts, transactions, AI insights |
-| **Accounts** | Account cards with balances and management |
-| **Transactions** | Transfer funds with real-time updates |
-| **Credit Cards** | Virtual card designs, management, payments |
-| **Card Detail** | Tabs for overview, transactions, statements, settings |
-| **Card Apply** | Multi-step application with card selection |
-| **Loans** | Active loans, eligibility, apply |
-| **Admin Dashboard** | System stats, activity feed, user charts |
-| **Admin Users** | User management with role controls |
-| **Admin Cards** | Card oversight and application processing |
-| **AI Chat** | Intelligent assistant with RAG + Agent mode |
-| **Profile** | Personal info, security, preferences |
+| Page | Preview |
+|------|---------|
+| **Login** — Dark theme with SSO options | ![Login](screenshots/login.png) |
+| **Register** — Registration with password strength meter | ![Register](screenshots/register.png) |
+| **Dashboard** — Stats, accounts, transactions, AI insights | ![Dashboard](screenshots/dashboard.png) |
+| **Accounts** — Account cards with balances, create account | ![Accounts](screenshots/accounts.png) |
+| **Transactions** — Transaction list, filters, send money, real-time | ![Transactions](screenshots/transactions.png) |
+| **Cards** — Virtual credit cards with network colors | ![Cards](screenshots/cards.png) |
+| **Card Apply** — Multi-step application wizard | ![Card Apply](screenshots/card-apply.png) |
+| **Loans** — Active loans, eligibility, loan types | ![Loans](screenshots/loans.png) |
+| **Notifications** — Real-time notification center | ![Notifications](screenshots/notifications.png) |
+| **Profile** — Personal info, security, preferences | ![Profile](screenshots/profile.png) |
+| **AI Chat** — Intelligent assistant with RAG + Agent mode | ![AI Chat](screenshots/ai-chat.png) |
+| **Admin Dashboard** — System stats, activity, charts | ![Admin Dashboard](screenshots/admin-dashboard.png) |
+| **Admin Users** — User management with role controls | ![Admin Users](screenshots/admin-users.png) |
+| **Admin Cards** — Card oversight & application processing | ![Admin Cards](screenshots/admin-cards.png) |
+| **Admin Agent** — AI agent monitoring & knowledge base | ![Admin Agent](screenshots/admin-agent.png) |
+| **Admin Settings** — System configuration | ![Admin Settings](screenshots/admin-settings.png) |
 
 ## Testing
 
