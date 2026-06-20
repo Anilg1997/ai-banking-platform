@@ -1,0 +1,166 @@
+<div class="profile-page animate-fade-in" *ngIf="user">
+  <div class="page-header">
+    <button class="back-btn" routerLink="/dashboard" matTooltip="Back to Dashboard">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1 class="page-title">Profile Settings</h1>
+  </div>
+
+  <div class="profile-grid">
+    <div class="profile-sidebar">
+      <div class="avatar-section">
+        <div class="avatar-circle">{{ getInitials() }}</div>
+        <h2 class="avatar-name">{{ user.firstName }} {{ user.lastName }}</h2>
+        <p class="avatar-email">{{ user.email }}</p>
+        <p class="avatar-member">{{ getMemberSince() }}</p>
+        <span class="status-badge status-active">Active Account</span>
+      </div>
+    </div>
+
+    <div class="profile-main">
+      <div class="glass-card">
+        <h3 class="card-title"><mat-icon>person</mat-icon> Personal Information</h3>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>First Name</label>
+              <input class="form-input" [(ngModel)]="personalInfo.firstName" />
+            </div>
+            <div class="form-group flex-1">
+              <label>Last Name</label>
+              <input class="form-input" [(ngModel)]="personalInfo.lastName" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Email</label>
+              <input class="form-input" type="email" [(ngModel)]="personalInfo.email" />
+            </div>
+            <div class="form-group flex-1">
+              <label>Phone</label>
+              <input class="form-input" [(ngModel)]="personalInfo.phone" placeholder="+1 (555) 000-0000" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" (click)="savePersonalInfo()" [disabled]="isSaving" style="width:auto;padding:12px 28px!important">
+              <span *ngIf="!isSaving"><mat-icon>save</mat-icon> Save Changes</span>
+              <span *ngIf="isSaving"><span class="spinner-btn"></span> Saving...</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <h3 class="card-title"><mat-icon>security</mat-icon> Security</h3>
+        <div class="card-body">
+          <div class="section-subtitle">Change Password</div>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Current Password</label>
+              <input class="form-input" type="password" [(ngModel)]="passwordForm.currentPassword" placeholder="Enter current password" />
+            </div>
+            <div class="form-group flex-1">
+              <label>New Password</label>
+              <input class="form-input" type="password" [(ngModel)]="passwordForm.newPassword" placeholder="Enter new password" />
+            </div>
+            <div class="form-group flex-1">
+              <label>Confirm Password</label>
+              <input class="form-input" type="password" [(ngModel)]="passwordForm.confirmPassword" placeholder="Confirm new password" />
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" (click)="changePassword()" [disabled]="isChangingPassword || !passwordForm.currentPassword || !passwordForm.newPassword || !passwordForm.confirmPassword" style="width:auto;padding:12px 28px!important">
+              <span *ngIf="!isChangingPassword"><mat-icon>lock_reset</mat-icon> Change Password</span>
+              <span *ngIf="isChangingPassword"><span class="spinner-btn"></span> Changing...</span>
+            </button>
+          </div>
+
+          <div class="section-divider"></div>
+          <div class="section-subtitle">Two-Factor Authentication</div>
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <span class="toggle-label">2FA Protection</span>
+              <span class="toggle-desc">Add an extra layer of security to your account</span>
+            </div>
+            <mat-slide-toggle [checked]="twoFactorEnabled" (change)="toggleTwoFactor()" color="primary"></mat-slide-toggle>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <h3 class="card-title"><mat-icon>settings</mat-icon> Preferences</h3>
+        <div class="card-body">
+          <div class="section-subtitle">Notification Preferences</div>
+          <div class="toggle-row">
+            <div class="toggle-info"><span class="toggle-label">Email Notifications</span><span class="toggle-desc">Receive updates via email</span></div>
+            <mat-slide-toggle [(ngModel)]="preferences.emailNotifications" color="primary"></mat-slide-toggle>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info"><span class="toggle-label">SMS Notifications</span><span class="toggle-desc">Receive SMS alerts for transactions</span></div>
+            <mat-slide-toggle [(ngModel)]="preferences.smsNotifications" color="primary"></mat-slide-toggle>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-info"><span class="toggle-label">Push Notifications</span><span class="toggle-desc">Receive push notifications on your devices</span></div>
+            <mat-slide-toggle [(ngModel)]="preferences.pushNotifications" color="primary"></mat-slide-toggle>
+          </div>
+
+          <div class="section-divider"></div>
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Currency Preference</label>
+              <select class="form-input" [(ngModel)]="preferences.currency">
+                <option value="USD">USD - US Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="INR">INR - Indian Rupee</option>
+              </select>
+            </div>
+            <div class="form-group flex-1">
+              <label>Language</label>
+              <select class="form-input" [(ngModel)]="preferences.language">
+                <option value="English">English</option>
+                <option value="Spanish">Spanish</option>
+                <option value="French">French</option>
+                <option value="German">German</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <h3 class="card-title"><mat-icon>history</mat-icon> Account Activity</h3>
+        <div class="card-body">
+          <div class="section-subtitle">Recent Logins</div>
+          <div class="activity-list">
+            <div class="activity-item" *ngFor="let login of recentLogins">
+              <div class="activity-icon" [class.current]="login.current">
+                <mat-icon>{{ login.current ? 'devices' : 'devices_other' }}</mat-icon>
+              </div>
+              <div class="activity-info">
+                <span class="activity-name">{{ login.device }}</span>
+                <span class="activity-meta">{{ login.location }} · {{ login.time }}</span>
+              </div>
+              <span class="activity-badge" *ngIf="login.current">Current</span>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+          <div class="section-subtitle">Trusted Devices</div>
+          <div class="activity-list">
+            <div class="activity-item" *ngFor="let device of savedDevices">
+              <div class="activity-icon">
+                <mat-icon>{{ device.type.includes('iPhone') ? 'phone_iphone' : device.type.includes('Mac') ? 'laptop_mac' : 'computer' }}</mat-icon>
+              </div>
+              <div class="activity-info">
+                <span class="activity-name">{{ device.name }}</span>
+                <span class="activity-meta">{{ device.type }} · Last used {{ device.lastUsed }}</span>
+              </div>
+              <span class="activity-badge trusted" *ngIf="device.trusted">Trusted</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

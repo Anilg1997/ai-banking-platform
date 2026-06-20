@@ -28,6 +28,10 @@ export class AuthService {
     return !!this.getToken() && !!this.currentUserSubject.value;
   }
 
+  get isAdmin(): boolean {
+    return this.currentUser?.roles?.includes('ROLE_ADMIN') ?? false;
+  }
+
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }

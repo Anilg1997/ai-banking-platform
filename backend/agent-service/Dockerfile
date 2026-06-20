@@ -1,0 +1,18 @@
+FROM maven:3.9.9-eclipse-temurin-21-alpine AS build
+WORKDIR /app
+COPY pom.xml /app/pom.xml
+COPY auth-service/pom.xml /app/auth-service/pom.xml
+COPY account-service/pom.xml /app/account-service/pom.xml
+COPY transaction-service/pom.xml /app/transaction-service/pom.xml
+COPY notification-service/pom.xml /app/notification-service/pom.xml
+COPY api-gateway/pom.xml /app/api-gateway/pom.xml
+COPY agent-service/pom.xml /app/agent-service/pom.xml
+RUN mvn -pl agent-service -am dependency:resolve -DskipTests -q
+COPY . /app
+RUN mvn -pl agent-service package -DskipTests -q
+
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=build /app/agent-service/target/*.jar app.jar
+EXPOSE 8095
+ENTRYPOINT ["java", "-jar", "app.jar"]

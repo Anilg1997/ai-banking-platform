@@ -93,6 +93,69 @@ spring:
                   replenishRate: 20
                   burstCapacity: 40
 
+        # === Card Service Routes ===
+        - id: card-service
+          uri: ${CARD_SERVICE_URL:http://localhost:8089}
+          predicates:
+            - Path=/api/cards/**
+          filters:
+            - StripPrefix=0
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter:
+                  replenishRate: 20
+                  burstCapacity: 40
+
+        # === Agent Service Routes ===
+        - id: agent-service
+          uri: ${AGENT_SERVICE_URL:http://localhost:8095}
+          predicates:
+            - Path=/api/agent/**
+          filters:
+            - StripPrefix=0
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter:
+                  replenishRate: 15
+                  burstCapacity: 30
+
+        # === Admin Routes (routed to auth-service for user mgmt, card-service for cards, agent-service for agent) ===
+        - id: admin-cards
+          uri: ${CARD_SERVICE_URL:http://localhost:8089}
+          predicates:
+            - Path=/api/admin/cards/**
+          filters:
+            - StripPrefix=0
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter:
+                  replenishRate: 15
+                  burstCapacity: 25
+
+        - id: admin-auth
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/admin/users/**
+          filters:
+            - StripPrefix=0
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter:
+                  replenishRate: 10
+                  burstCapacity: 20
+
+        - id: admin-agent
+          uri: ${AGENT_SERVICE_URL:http://localhost:8095}
+          predicates:
+            - Path=/api/admin/agent/**
+          filters:
+            - StripPrefix=0
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter:
+                  replenishRate: 10
+                  burstCapacity: 20
+
   data:
     redis:
       host: ${REDIS_HOST:localhost}

@@ -23,7 +23,9 @@
         <module>account-service</module>
         <module>transaction-service</module>
         <module>notification-service</module>
+        <module>card-service</module>
         <module>api-gateway</module>
+        <module>agent-service</module>
     </modules>
 
     <properties>

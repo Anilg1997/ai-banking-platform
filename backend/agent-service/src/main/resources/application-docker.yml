@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:postgres}:${DB_PORT:5432}/${DB_NAME:banking_agents}
+
+app:
+  services:
+    account-service:
+      url: ${ACCOUNT_SERVICE_URL:http://account-service:8083}
+    transaction-service:
+      url: ${TRANSACTION_SERVICE_URL:http://transaction-service:8085}
+    card-service:
+      url: ${CARD_SERVICE_URL:http://card-service:8089}
+    auth-service:
+      url: ${AUTH_SERVICE_URL:http://auth-service:8081}
+
+ollama:
+  base-url: ${OLLAMA_BASE_URL:http://ollama:11434}
+
+chroma:
+  url: ${CHROMA_URL:http://chromadb:8000}
+
+logging:
+  level:
+    com.banking: INFO
+    dev.langchain4j: INFO

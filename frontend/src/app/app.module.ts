@@ -47,6 +47,12 @@ import { AiChatComponent } from './ai/ai-chat.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { LoadingSpinnerComponent } from './shared/components/loading-spinner/loading-spinner.component';
 
+import { CardsComponent } from './cards/cards.component';
+import { CardDetailComponent } from './cards/card-detail.component';
+import { CardApplyComponent } from './cards/card-apply.component';
+import { LoansComponent } from './loans/loans.component';
+import { ProfileComponent } from './profile/profile.component';
+
 import { AuthService } from './core/auth/auth.service';
 import { AuthGuard } from './core/auth/auth.guard';
 import { JwtInterceptor } from './core/auth/jwt.interceptor';
@@ -63,6 +69,11 @@ import { JwtInterceptor } from './core/auth/jwt.interceptor';
     AiChatComponent,
     NotificationsComponent,
     LoadingSpinnerComponent,
+    CardsComponent,
+    CardDetailComponent,
+    CardApplyComponent,
+    LoansComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

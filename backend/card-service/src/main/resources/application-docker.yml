@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:postgres}:${DB_PORT:5432}/${DB_NAME:banking_cards}
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+  services:
+    account-service:
+      url: ${ACCOUNT_SERVICE_URL:http://account-service:8083}
+
+logging:
+  level:
+    com.banking: INFO

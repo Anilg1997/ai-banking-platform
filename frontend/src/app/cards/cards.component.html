@@ -1,0 +1,145 @@
+<div class="cards-page animate-fade-in">
+  <div class="page-header">
+    <div class="header-left">
+      <button class="back-btn" routerLink="/dashboard" matTooltip="Back to Dashboard">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-text">
+        <h1 class="page-title">Your Cards</h1>
+        <p class="page-subtitle">Manage your credit &amp; debit cards</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn-create" routerLink="/cards/apply" matTooltip="Apply for a new card">
+        <mat-icon>add</mat-icon>
+        <span>Apply for New Card</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading your cards...</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading">
+    <div class="cards-content" *ngIf="cards.length > 0">
+      <div class="cards-carousel">
+        <div class="card-virtual animate-slide-in" *ngFor="let card of cards; let i = index; trackBy: trackByCardId"
+             [style.animation-delay]="(i * 0.1) + 's'"
+             [class.selected]="selectedCardId === card.id"
+             (click)="selectCard(card)">
+          <div class="card-bg" [style.background]="getCardGradient(card.cardNetwork)"></div>
+          <div class="card-shine"></div>
+          <div class="card-content">
+            <div class="card-top-row">
+              <div class="card-chip">
+                <div class="chip-inner"></div>
+              </div>
+              <div class="card-network-badge">{{ cardNetworkLabels[card.cardNetwork] }}</div>
+            </div>
+            <div class="card-number">{{ maskNumber(card.cardNumber) }}</div>
+            <div class="card-middle">
+              <div class="card-holder">
+                <span class="card-label">Card Holder</span>
+                <span class="card-value">{{ card.cardholderName }}</span>
+              </div>
+              <div class="card-expiry">
+                <span class="card-label">Expires</span>
+                <span class="card-value">{{ card.expiryDate }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-status-badge" [class]="getStatusClass(card.status)">
+            {{ card.isFrozen ? 'Frozen' : cardStatusLabels[card.status] }}
+          </div>
+          <div class="card-type-badge">
+            {{ cardTypeLabels[card.cardType] }}
+          </div>
+        </div>
+      </div>
+
+      <div class="card-health animate-fade-in-up">
+        <h3 class="section-title">Card Health &amp; Usage</h3>
+        <div class="health-grid">
+          <div class="health-item">
+            <span class="health-label">Total Credit Limit</span>
+            <span class="health-value">{{ formatCurrency(totalCreditLimit) }}</span>
+          </div>
+          <div class="health-item">
+            <span class="health-label">Available Credit</span>
+            <span class="health-value success">{{ formatCurrency(totalAvailableCredit) }}</span>
+          </div>
+          <div class="health-item">
+            <span class="health-label">Used Credit</span>
+            <span class="health-value warning">{{ formatCurrency(totalUsedCredit) }}</span>
+          </div>
+          <div class="health-item">
+            <span class="health-label">Reward Points</span>
+            <span class="health-value gold">{{ totalRewardPoints | number }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="selected-card-actions" *ngIf="selectedCardId">
+        <ng-container *ngFor="let card of cards">
+          <div class="action-buttons" *ngIf="card.id === selectedCardId">
+            <button class="action-btn" *ngIf="!card.isFrozen" (click)="freezeCard(card.id)" matTooltip="Freeze this card">
+              <mat-icon>ac_unit</mat-icon> Freeze
+            </button>
+            <button class="action-btn" *ngIf="card.isFrozen" (click)="unfreezeCard(card.id)" matTooltip="Unfreeze this card">
+              <mat-icon>check_circle</mat-icon> Unfreeze
+            </button>
+            <button class="action-btn" *ngIf="!card.isActivated" (click)="activateCard(card.id)" matTooltip="Activate this card">
+              <mat-icon>verified</mat-icon> Activate
+            </button>
+            <button class="action-btn" (click)="makePayment(card.id)" matTooltip="Make a payment">
+              <mat-icon>payment</mat-icon> Make Payment
+            </button>
+            <button class="action-btn" [routerLink]="['/cards', card.id]" matTooltip="View card details">
+              <mat-icon>visibility</mat-icon> View Details
+            </button>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="recent-transactions animate-fade-in-up">
+        <div class="section-header-row">
+          <h3 class="section-title">Recent Transactions</h3>
+          <a class="view-all-link" *ngIf="selectedCardId" [routerLink]="['/cards', selectedCardId]">
+            View All <mat-icon>arrow_forward</mat-icon>
+          </a>
+        </div>
+        <div class="txn-list" *ngIf="selectedCardTransactions.length > 0">
+          <div class="txn-item" *ngFor="let txn of selectedCardTransactions; trackBy: trackByTxnId">
+            <div class="txn-icon" [class.credit]="txn.type === 'credit'" [class.debit]="txn.type === 'debit'">
+              <mat-icon>{{ txn.type === 'credit' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+            </div>
+            <div class="txn-info">
+              <span class="txn-merchant">{{ txn.merchantName }}</span>
+              <span class="txn-desc">{{ txn.description }} · {{ formatDate(txn.createdAt) }}</span>
+            </div>
+            <div class="txn-amount" [class.negative]="txn.type === 'debit'">
+              {{ txn.type === 'debit' ? '-' : '+' }}{{ formatCurrency(txn.amount, txn.currency) }}
+            </div>
+            <span class="txn-status" [class]="getTxnStatusClass(txn.status)">
+              {{ txn.status }}
+            </span>
+          </div>
+        </div>
+        <div class="empty-txns" *ngIf="selectedCardTransactions.length === 0">
+          <p>No recent transactions for this card.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="cards.length === 0">
+      <div class="empty-icon"><mat-icon>credit_card</mat-icon></div>
+      <h3>No Cards Yet</h3>
+      <p>Apply for your first credit or debit card to get started.</p>
+      <button class="btn-primary" routerLink="/cards/apply" style="width:auto;padding:12px 28px!important">
+        <mat-icon>add</mat-icon> Apply for a Card
+      </button>
+    </div>
+  </ng-container>
+</div>

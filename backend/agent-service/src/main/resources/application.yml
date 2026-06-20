@@ -1,0 +1,73 @@
+server:
+  port: 8095
+
+spring:
+  application:
+    name: agent-service
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:banking_agents}
+    username: ${DB_USER:banking_user}
+    password: ${DB_PASSWORD:banking_pass_123}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 5
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+    open-in-view: false
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: UTC
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+  services:
+    account-service:
+      url: ${ACCOUNT_SERVICE_URL:http://localhost:8083}
+    transaction-service:
+      url: ${TRANSACTION_SERVICE_URL:http://localhost:8085}
+    card-service:
+      url: ${CARD_SERVICE_URL:http://localhost:8089}
+    auth-service:
+      url: ${AUTH_SERVICE_URL:http://localhost:8081}
+
+ollama:
+  base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+  chat-model: ${OLLAMA_CHAT_MODEL:llama3.2}
+  embed-model: ${OLLAMA_EMBED_MODEL:nomic-embed-text}
+  temperature: 0.7
+
+chroma:
+  url: ${CHROMA_URL:http://localhost:8000}
+  collection-name: ${CHROMA_COLLECTION:banking_knowledge}
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    com.banking: DEBUG
+    dev.langchain4j: DEBUG
+    org.springframework.security: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always

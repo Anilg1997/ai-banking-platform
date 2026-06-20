@@ -1,14 +1,13 @@
 <div class="app-container">
-  <!-- Animated Background Orbs -->
   <div class="bg-orb bg-orb-1"></div>
   <div class="bg-orb bg-orb-2"></div>
   <div class="bg-orb bg-orb-3"></div>
 
-  <!-- Navigation Bar (hidden on auth pages) -->
+  <!-- Navigation Bar -->
   <nav class="navbar animate-fade-in" *ngIf="!isAuthPage">
     <div class="nav-container">
       <div class="nav-brand" routerLink="/dashboard">
-        <span class="brand-icon">◆</span>
+        <span class="brand-icon">&#9670;</span>
         <span class="brand-text">Nova<span class="brand-accent">Bank</span></span>
       </div>
       <div class="nav-links">
@@ -24,6 +23,18 @@
           <mat-icon class="nav-icon">receipt_long</mat-icon>
           <span>Transactions</span>
         </a>
+        <a class="nav-link" routerLink="/cards" routerLinkActive="active">
+          <mat-icon class="nav-icon">credit_card</mat-icon>
+          <span>Cards</span>
+        </a>
+        <a class="nav-link" routerLink="/loans" routerLinkActive="active">
+          <mat-icon class="nav-icon">account_balance</mat-icon>
+          <span>Loans</span>
+        </a>
+        <a class="nav-link nav-admin" *ngIf="isAdmin" routerLink="/admin/dashboard" routerLinkActive="active">
+          <mat-icon class="nav-icon">admin_panel_settings</mat-icon>
+          <span>Admin</span>
+        </a>
       </div>
       <div class="nav-actions">
         <div class="notification-wrapper">
@@ -31,7 +42,6 @@
             <mat-icon class="nav-icon">notifications_outline</mat-icon>
             <span class="notification-dot" *ngIf="unreadCount > 0">{{ unreadCount > 9 ? '9+' : unreadCount }}</span>
           </button>
-          <!-- Notification Dropdown -->
           <div class="notification-dropdown" *ngIf="showNotifications" (click)="$event.stopPropagation()">
             <div class="dropdown-header">
               <span class="dropdown-title">Notifications</span>
@@ -58,12 +68,31 @@
             </div>
           </div>
         </div>
-        <button mat-icon-button class="nav-btn" matTooltip="Settings">
-          <mat-icon class="nav-icon">settings_outline</mat-icon>
+        <button mat-icon-button class="nav-btn" routerLink="/profile" matTooltip="Profile">
+          <mat-icon class="nav-icon">person_outline</mat-icon>
         </button>
-        <button mat-icon-button class="nav-btn nav-avatar" matTooltip="Profile">
+        <button mat-icon-button class="nav-btn nav-avatar" [matMenuTriggerFor]="userMenu" matTooltip="Account">
           <span class="avatar-text">{{ getInitials() }}</span>
         </button>
+        <mat-menu #userMenu="matMenu" class="user-menu">
+          <button mat-menu-item routerLink="/profile">
+            <mat-icon>person</mat-icon> Profile
+          </button>
+          <button mat-menu-item routerLink="/cards">
+            <mat-icon>credit_card</mat-icon> My Cards
+          </button>
+          <button mat-menu-item routerLink="/notifications">
+            <mat-icon>notifications</mat-icon> Notifications
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item *ngIf="isAdmin" routerLink="/admin/dashboard">
+            <mat-icon>admin_panel_settings</mat-icon> Admin Panel
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="authService.logout(); $event.stopPropagation()">
+            <mat-icon>logout</mat-icon> Sign Out
+          </button>
+        </mat-menu>
       </div>
     </div>
   </nav>
@@ -73,7 +102,7 @@
     <router-outlet></router-outlet>
   </main>
 
-  <!-- AI Chat Assistant (visible everywhere) -->
+  <!-- AI Chat Assistant -->
   <app-ai-chat></app-ai-chat>
 
   <!-- Footer -->

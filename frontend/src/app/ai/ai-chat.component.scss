@@ -332,6 +332,11 @@
   margin-bottom: 4px;
 }
 
+.message-content ::ng-deep .text-muted {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
 .message-content ::ng-deep code {
   background: rgba(0, 0, 0, 0.2);
   padding: 1px 6px;
@@ -360,6 +365,45 @@
 @keyframes typingBounce {
   0%, 60%, 100% { transform: translateY(0); }
   30% { transform: translateY(-6px); }
+}
+
+/* ===== Toggle Bar ===== */
+.toggle-bar {
+  display: flex;
+  gap: 4px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.toggle-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  user-select: none;
+}
+
+.toggle-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+}
+
+.toggle-item.active {
+  background: rgba(212, 168, 67, 0.15);
+  color: var(--accent-gold);
+}
+
+.toggle-item mat-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
 }
 
 /* ===== Input ===== */

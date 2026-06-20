@@ -1,0 +1,174 @@
+<div class="admin-cards-page animate-fade-in">
+  <div class="page-header">
+    <div class="header-left">
+      <button class="back-btn" routerLink="/admin" matTooltip="Back to Admin Dashboard">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-text">
+        <h1 class="page-title">Card Administration</h1>
+        <p class="page-subtitle">Manage credit cards and pending applications</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-summary">
+    <div class="stat-chip">
+      <span class="chip-value">{{ totalCards.toLocaleString() }}</span>
+      <span class="chip-label">Total Cards</span>
+    </div>
+    <div class="stat-chip">
+      <span class="chip-value active">{{ activeCards.toLocaleString() }}</span>
+      <span class="chip-label">Active</span>
+    </div>
+    <div class="stat-chip">
+      <span class="chip-value frozen">{{ frozenCards }}</span>
+      <span class="chip-label">Frozen</span>
+    </div>
+    <div class="stat-chip">
+      <span class="chip-value pending">{{ pendingApps }}</span>
+      <span class="chip-label">Pending Apps</span>
+    </div>
+  </div>
+
+  <div class="tabs-card">
+    <div class="tabs-header">
+      <button class="tab-btn" [class.active]="selectedTab === 0" (click)="selectedTab = 0">
+        <mat-icon>credit_card</mat-icon>
+        All Cards
+      </button>
+      <button class="tab-btn" [class.active]="selectedTab === 1" (click)="selectedTab = 1">
+        <mat-icon>description</mat-icon>
+        Applications
+        <span class="tab-badge" *ngIf="pendingApps > 0">{{ pendingApps }}</span>
+      </button>
+    </div>
+
+    <div class="tab-content" *ngIf="selectedTab === 0">
+      <div class="cards-grid">
+        <div class="card-item animate-slide-in" *ngFor="let card of cards">
+          <div class="card-item-header">
+            <div class="card-type-icon" [class]="card.cardType.toLowerCase()">
+              <mat-icon>{{ card.cardType === 'VISA' ? 'credit_card' : card.cardType === 'MASTERCARD' ? 'card_membership' : 'workspace_premium' }}</mat-icon>
+            </div>
+            <span class="status-badge" [class]="getStatusBadgeClass(card.status)">{{ card.status }}</span>
+          </div>
+          <div class="card-number">{{ card.cardNumber }}</div>
+          <div class="card-holder">{{ card.cardHolderName }}</div>
+          <div class="card-type-label">{{ card.cardType }} • Expires {{ card.expiryDate }}</div>
+          <div class="card-limits">
+            <div class="limit-row">
+              <span class="limit-label">Credit Limit</span>
+              <span class="limit-value">{{ formatCurrency(card.creditLimit) }}</span>
+            </div>
+            <div class="limit-row">
+              <span class="limit-label">Available</span>
+              <span class="limit-value available">{{ formatCurrency(card.availableCredit) }}</span>
+            </div>
+          </div>
+          <div class="card-usage">
+            <div class="usage-track">
+              <div class="usage-fill" [style.width.%]="((card.creditLimit - card.availableCredit) / card.creditLimit * 100)"></div>
+            </div>
+            <span class="usage-text">{{ ((card.creditLimit - card.availableCredit) / card.creditLimit * 100).toFixed(0) }}% used</span>
+          </div>
+          <div class="card-item-actions">
+            <button class="action-btn-sm" matTooltip="View Details" (click)="viewCardDetails(card.id)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button class="action-btn-sm" matTooltip="Freeze Card" *ngIf="card.status === 'ACTIVE'" (click)="updateCardStatus(card.id, 'FROZEN')">
+              <mat-icon>ac_unit</mat-icon>
+            </button>
+            <button class="action-btn-sm" matTooltip="Activate Card" *ngIf="card.status === 'FROZEN'" (click)="updateCardStatus(card.id, 'ACTIVE')">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" *ngIf="selectedTab === 1">
+      <div class="applications-table">
+        <div class="app-table-header">
+          <span class="app-col applicant">Applicant</span>
+          <span class="app-col type">Card Type</span>
+          <span class="app-col income">Annual Income</span>
+          <span class="app-col score">Credit Score</span>
+          <span class="app-col status">Status</span>
+          <span class="app-col actions">Actions</span>
+        </div>
+        <div class="app-table-row" *ngFor="let app of applications">
+          <span class="app-col applicant">
+            <span class="app-name">{{ app.applicantName }}</span>
+            <span class="app-email">{{ app.applicantEmail }}</span>
+          </span>
+          <span class="app-col type">{{ app.cardType }}</span>
+          <span class="app-col income">{{ formatCurrency(app.annualIncome) }}</span>
+          <span class="app-col score">
+            <span class="score-value" [class.good]="app.creditScore >= 700" [class.fair]="app.creditScore >= 650 && app.creditScore < 700" [class.poor]="app.creditScore < 650">
+              {{ app.creditScore }}
+            </span>
+          </span>
+          <span class="app-col status">
+            <span class="status-badge" [class]="getStatusBadgeClass(app.status)">{{ app.status }}</span>
+          </span>
+          <span class="app-col actions">
+            <button class="action-btn-sm" matTooltip="View Details" (click)="viewApplicationDetail(app)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button class="action-btn-sm approve" matTooltip="Approve" *ngIf="app.status === 'PENDING'" (click)="approveApplication(app.id)">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button class="action-btn-sm reject" matTooltip="Reject" *ngIf="app.status === 'PENDING'" (click)="rejectApplication(app.id)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="showAppDetail && selectedApplication" (click)="closeAppDetail()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title">Application Details</h2>
+        <button class="modal-close" (click)="closeAppDetail()"><mat-icon>close</mat-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Applicant</span>
+            <span class="detail-value">{{ selectedApplication.applicantName }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Email</span>
+            <span class="detail-value">{{ selectedApplication.applicantEmail }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Card Type</span>
+            <span class="detail-value">{{ selectedApplication.cardType }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Annual Income</span>
+            <span class="detail-value">{{ formatCurrency(selectedApplication.annualIncome) }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Credit Score</span>
+            <span class="detail-value">{{ selectedApplication.creditScore }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Status</span>
+            <span class="detail-value">
+              <span class="status-badge" [class]="getStatusBadgeClass(selectedApplication.status)">{{ selectedApplication.status }}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeAppDetail()">Close</button>
+        <button class="btn-primary" *ngIf="selectedApplication.status === 'PENDING'" (click)="approveApplication(selectedApplication.id)">
+          <mat-icon>check</mat-icon> Approve
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

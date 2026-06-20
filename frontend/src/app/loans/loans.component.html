@@ -1,0 +1,142 @@
+<div class="loans-page animate-fade-in">
+  <div class="page-header">
+    <div class="header-left">
+      <button class="back-btn" routerLink="/dashboard" matTooltip="Back to Dashboard">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-text">
+        <h1 class="page-title">Loans</h1>
+        <p class="page-subtitle">Manage your loans and apply for new ones</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn-create" (click)="toggleApplyForm()" matTooltip="Apply for a loan">
+        <mat-icon>add</mat-icon>
+        <span>Apply for Loan</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="loading-state" *ngIf="isLoading">
+    <div class="spinner"></div>
+    <p>Loading loans...</p>
+  </div>
+
+  <ng-container *ngIf="!isLoading">
+    <div class="eligibility-banner animate-fade-in-up">
+      <mat-icon class="eligibility-icon">verified</mat-icon>
+      <div class="eligibility-text">
+        <h3>You're Pre-Qualified!</h3>
+        <p>Based on your profile and credit history, you're pre-qualified for up to <strong>{{ formatCurrency(preQualifiedLimit) }}</strong> in total loans.</p>
+      </div>
+    </div>
+
+    <div class="active-loans-section" *ngIf="activeLoans.length > 0">
+      <h3 class="section-title">Active Loans</h3>
+      <div class="loans-grid">
+        <div class="loan-card animate-slide-in" *ngFor="let loan of activeLoans; let i = index; trackBy: trackByLoanId" [style.animation-delay]="(i * 0.08) + 's'">
+          <div class="loan-card-header">
+            <div class="loan-type-icon" [class]="loan.loanType.toLowerCase()">
+              <mat-icon>{{ loanTypeIcons[loan.loanType] }}</mat-icon>
+            </div>
+            <span class="status-badge" [class]="getStatusClass(loan.status)">
+              {{ loanStatusLabels[loan.status] }}
+            </span>
+          </div>
+          <div class="loan-card-body">
+            <h4 class="loan-type-label">{{ loanTypeLabels[loan.loanType] }}</h4>
+            <div class="loan-amount">{{ formatCurrency(loan.approvedAmount, loan.currency) }}</div>
+            <div class="loan-meta-row">
+              <div class="loan-meta"><span class="meta-label">EMI</span><span class="meta-value">{{ formatCurrency(loan.emiAmount, loan.currency) }}</span></div>
+              <div class="loan-meta"><span class="meta-label">Tenure</span><span class="meta-value">{{ loan.totalEmis }} months</span></div>
+              <div class="loan-meta"><span class="meta-label">Interest</span><span class="meta-value">{{ loan.interestRate }}%</span></div>
+            </div>
+            <div class="loan-meta-row">
+              <div class="loan-meta"><span class="meta-label">Next Payment</span><span class="meta-value">{{ formatDate(loan.nextPaymentDate) }}</span></div>
+              <div class="loan-meta"><span class="meta-label">Outstanding</span><span class="meta-value warning">{{ formatCurrency(loan.outstandingAmount, loan.currency) }}</span></div>
+            </div>
+          </div>
+          <div class="loan-progress">
+            <div class="progress-header">
+              <span class="progress-label">Repayment Progress</span>
+              <span class="progress-pct">{{ getRepaymentPercent(loan) }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width.%]="getRepaymentPercent(loan)"></div>
+            </div>
+            <span class="progress-detail">{{ loan.paidEmis }} of {{ loan.totalEmis }} EMIs paid</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loan-types-section">
+      <h3 class="section-title">Available Loan Types</h3>
+      <div class="loan-types-grid">
+        <div class="loan-type-card" *ngFor="let lt of availableLoanTypes">
+          <div class="lt-icon" [class]="lt.type.toLowerCase()">
+            <mat-icon>{{ lt.icon }}</mat-icon>
+          </div>
+          <h4 class="lt-name">{{ lt.label }}</h4>
+          <p class="lt-desc">{{ lt.description }}</p>
+          <div class="lt-details">
+            <span>From <strong>{{ lt.interestRate }}</strong></span>
+            <span>Up to <strong>{{ formatCurrency(lt.maxAmount) }}</strong></span>
+            <span>Up to <strong>{{ lt.maxTenure }}</strong></span>
+          </div>
+          <button class="btn-apply-sm" (click)="toggleApplyForm(lt.type)">Apply Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="recent-applications" *ngIf="loanApplications.length > 0">
+      <h3 class="section-title">Recent Applications</h3>
+      <div class="apps-table">
+        <div class="app-row" *ngFor="let app of loanApplications; trackBy: trackByAppId">
+          <div class="app-info">
+            <span class="app-type">{{ getLoanTypeLabel(app.loanType) }}</span>
+            <span class="app-ref">Ref: {{ app.applicationRef }}</span>
+          </div>
+          <span class="app-amount">{{ formatCurrency(app.amount) }}</span>
+          <span class="app-date">{{ formatDate(app.createdAt) }}</span>
+          <span class="status-badge-sm" [class]="getAppStatusClass(app.status)">{{ app.status }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="loan-apply-form card" *ngIf="showApplyForm">
+      <div class="card-header-section">
+        <h3><mat-icon>note_add</mat-icon> Apply for a Loan</h3>
+        <button class="close-btn" (click)="toggleApplyForm()"><mat-icon>close</mat-icon></button>
+      </div>
+      <div class="apply-form-body">
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label>Loan Type</label>
+            <select class="form-input" [(ngModel)]="applyData.loanType" (change)="onLoanTypeChange()">
+              <option value="" disabled>Select loan type</option>
+              <option *ngFor="let lt of availableLoanTypes" [value]="lt.type">{{ lt.label }}</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <label>Tenure (months)</label>
+            <input type="number" class="form-input" [(ngModel)]="applyData.tenureMonths" min="6" max="360" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label>Loan Amount (USD)</label>
+            <input type="number" class="form-input" [(ngModel)]="applyData.amount" min="1000" [max]="getMaxAmount(applyData.loanType)" placeholder="Amount" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-cancel" (click)="toggleApplyForm()">Cancel</button>
+          <button class="btn-primary" (click)="submitApplication()" [disabled]="isApplying || !applyData.loanType || applyData.amount <= 0" style="width:auto;padding:12px 28px!important">
+            <span *ngIf="!isApplying"><mat-icon>check_circle</mat-icon> Submit</span>
+            <span *ngIf="isApplying"><span class="spinner-btn"></span> Submitting...</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

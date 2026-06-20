@@ -91,4 +91,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }
     return 'NB';
   }
+
+  get isAdmin(): boolean {
+    return this.authService.isAdmin;
+  }
 }

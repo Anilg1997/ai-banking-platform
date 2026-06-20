@@ -271,6 +271,88 @@ services:
     networks:
       - banking-network
 
+  # ============ ChromaDB (Vector Database) ============
+
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: banking-chromadb
+    ports:
+      - "8000:8000"
+    volumes:
+      - chromadb-data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - PERSIST_DIRECTORY=/chroma/chroma
+      - ANONYMIZED_TELEMETRY=FALSE
+    networks:
+      - banking-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/heartbeat"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ============ Card Microservice ============
+
+  card-service:
+    build:
+      context: ./backend
+      dockerfile: card-service/Dockerfile
+    container_name: banking-card-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: banking_cards
+      DB_USER: banking_user
+      DB_PASSWORD: banking_pass_123
+      ACCOUNT_SERVICE_URL: http://account-service:8083
+      JWT_SECRET: ${JWT_SECRET:-dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+    ports:
+      - "8089:8089"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      account-service:
+        condition: service_started
+    networks:
+      - banking-network
+
+  # ============ Agent Microservice (LangChain4j) ============
+
+  agent-service:
+    build:
+      context: ./backend
+      dockerfile: agent-service/Dockerfile
+    container_name: banking-agent-service
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: banking_agents
+      DB_USER: banking_user
+      DB_PASSWORD: banking_pass_123
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      OLLAMA_CHAT_MODEL: llama3.2
+      OLLAMA_EMBED_MODEL: nomic-embed-text
+      CHROMA_URL: http://chromadb:8000
+      ACCOUNT_SERVICE_URL: http://account-service:8083
+      TRANSACTION_SERVICE_URL: http://transaction-service:8085
+      CARD_SERVICE_URL: http://card-service:8089
+      AUTH_SERVICE_URL: http://auth-service:8081
+      JWT_SECRET: ${JWT_SECRET:-dGhpc0lzQVZlcnlTZWN1cmVTZWNyZXRLZXlGb3JKYXZhQmFua2luZ0FwcEVudGVycHJpc2VNb2Rl}
+    ports:
+      - "8095:8095"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      chromadb:
+        condition: service_started
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - banking-network
+
   # ============ Monitoring ============
 
   redis-commander:
@@ -290,6 +372,7 @@ volumes:
   postgres-data:
   redis-data:
   mongodb-data:
+  chromadb-data:
 
 networks:
   banking-network:

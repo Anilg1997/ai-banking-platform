@@ -1,0 +1,213 @@
+<div class="card-detail-page animate-fade-in" *ngIf="card">
+  <div class="detail-header">
+    <div class="header-left">
+      <button class="back-btn" routerLink="/cards" matTooltip="Back to Cards">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-text">
+        <h1 class="page-title">{{ cardNetworkLabels[card.cardNetwork] }} {{ cardTypeLabels[card.cardType] }}</h1>
+        <p class="card-subtitle">{{ maskNumber(card.cardNumber) }}</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="status-badge-lg" [class]="getStatusClass(card.status)">
+        {{ card.isFrozen ? 'Frozen' : cardStatusLabels[card.status] }}
+      </span>
+    </div>
+  </div>
+
+  <div class="card-hero">
+    <div class="card-display">
+      <div class="card-bg" [style.background]="getCardGradient(card.cardNetwork)"></div>
+      <div class="card-shine"></div>
+      <div class="card-hero-content">
+        <div class="card-hero-top">
+          <div class="card-chip-lg">
+            <div class="chip-inner"></div>
+          </div>
+          <div class="card-hero-network">{{ cardNetworkLabels[card.cardNetwork] }}</div>
+        </div>
+        <div class="card-hero-number">{{ maskNumber(card.cardNumber) }}</div>
+        <div class="card-hero-row">
+          <div class="card-hero-field">
+            <span class="hero-label">Card Holder</span>
+            <span class="hero-value">{{ card.cardholderName }}</span>
+          </div>
+          <div class="card-hero-field">
+            <span class="hero-label">Expiry</span>
+            <span class="hero-value">{{ card.expiryDate }}</span>
+          </div>
+          <div class="card-hero-field" (mouseenter)="showCvv = true" (mouseleave)="showCvv = false">
+            <span class="hero-label">CVV</span>
+            <span class="hero-value cvv">{{ showCvv ? card.cvv : '***' }}</span>
+            <mat-icon class="cvv-icon" (click)="showCvv = !showCvv">visibility</mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-stats-side">
+      <div class="credit-gauge">
+        <svg class="gauge-svg" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>
+          <circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent-gold)" stroke-width="10"
+                  stroke-dasharray="326.73" [attr.stroke-dashoffset]="326.73 - (326.73 * usedCreditPercent() / 100)"
+                  stroke-linecap="round" transform="rotate(-90 60 60)"/>
+          <text x="60" y="55" text-anchor="middle" fill="var(--text-primary)" font-size="18" font-weight="700">{{ usedCreditPercent() }}%</text>
+          <text x="60" y="70" text-anchor="middle" fill="var(--text-muted)" font-size="8">Used</text>
+        </svg>
+        <div class="gauge-labels">
+          <div class="gauge-item"><span class="gauge-label">Limit</span><span class="gauge-value">{{ formatCurrency(card.creditLimit, card.currency) }}</span></div>
+          <div class="gauge-item"><span class="gauge-label">Available</span><span class="gauge-value success">{{ formatCurrency(card.availableCredit, card.currency) }}</span></div>
+          <div class="gauge-item"><span class="gauge-label">Used</span><span class="gauge-value warning">{{ formatCurrency(card.usedCredit, card.currency) }}</span></div>
+        </div>
+      </div>
+      <div class="mini-stat-grid">
+        <div class="mini-stat"><mat-icon class="blue">trending_up</mat-icon><span class="ms-label">This Month</span><span class="ms-value">{{ formatCurrency(monthlyStats.totalSpent) }}</span></div>
+        <div class="mini-stat"><mat-icon class="green">payment</mat-icon><span class="ms-label">Last Payment</span><span class="ms-value">{{ formatCurrency(monthlyStats.lastPayment) }}</span></div>
+        <div class="mini-stat"><mat-icon class="gold">stars</mat-icon><span class="ms-label">Interest YTD</span><span class="ms-value">{{ formatCurrency(monthlyStats.interestYTD) }}</span></div>
+        <div class="mini-stat"><mat-icon class="purple">card_giftcard</mat-icon><span class="ms-label">Reward Points</span><span class="ms-value">{{ monthlyStats.rewardPoints | number }}</span></div>
+      </div>
+    </div>
+  </div>
+
+  <mat-tab-group class="detail-tabs" (selectedIndexChange)="onTabChange($event)" [selectedIndex]="activeTab">
+    <mat-tab label="Overview">
+      <ng-template matTabContent>
+      <div class="tab-pane overview-tab">
+        <div class="quick-stats-row">
+          <div class="stat-tile blue"><mat-icon>receipt</mat-icon><div><span class="stat-num">{{ transactions.length }}</span><span class="stat-label">Transactions</span></div></div>
+          <div class="stat-tile green"><mat-icon>trending_up</mat-icon><div><span class="stat-num">{{ formatCurrency(monthlyStats.totalSpent) }}</span><span class="stat-label">Total Spent</span></div></div>
+          <div class="stat-tile gold"><mat-icon>stars</mat-icon><div><span class="stat-num">{{ monthlyStats.rewardPoints | number }}</span><span class="stat-label">Reward Points</span></div></div>
+        </div>
+        <div class="recent-txns-card">
+          <h3 class="card-section-title">Recent Transactions</h3>
+          <div class="txn-list">
+            <div class="txn-item" *ngFor="let txn of transactions.slice(0, 5); trackBy: trackByTxnId">
+              <div class="txn-icon" [class.credit]="txn.type === 'credit'" [class.debit]="txn.type === 'debit'">
+                <mat-icon>{{ txn.type === 'credit' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+              </div>
+              <div class="txn-info"><span class="txn-merchant">{{ txn.merchantName }}</span><span class="txn-desc">{{ txn.description }}</span></div>
+              <span class="txn-amount" [class.negative]="txn.type === 'debit'">{{ txn.type === 'debit' ? '-' : '+' }}{{ formatCurrency(txn.amount, txn.currency) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Transactions">
+      <ng-template matTabContent>
+      <div class="tab-pane">
+        <div class="filter-bar">
+          <input class="filter-input" placeholder="Category" [(ngModel)]="txnFilter.category" />
+          <input class="filter-input" type="date" [(ngModel)]="txnFilter.dateFrom" placeholder="From" />
+          <input class="filter-input" type="date" [(ngModel)]="txnFilter.dateTo" placeholder="To" />
+          <input class="filter-input" type="number" [(ngModel)]="txnFilter.minAmount" placeholder="Min $" />
+          <input class="filter-input" type="number" [(ngModel)]="txnFilter.maxAmount" placeholder="Max $" />
+          <button class="filter-apply" (click)="applyFilter()"><mat-icon>search</mat-icon></button>
+          <button class="filter-clear" (click)="clearFilter()">Clear</button>
+        </div>
+        <div class="txn-list full">
+          <div class="txn-item" *ngFor="let txn of transactions; trackBy: trackByTxnId">
+            <div class="txn-icon" [class.credit]="txn.type === 'credit'" [class.debit]="txn.type === 'debit'">
+              <mat-icon>{{ txn.type === 'credit' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+            </div>
+            <div class="txn-info">
+              <span class="txn-merchant">{{ txn.merchantName }}</span>
+              <span class="txn-desc">{{ txn.description }} · {{ formatDate(txn.createdAt) }}</span>
+            </div>
+            <span class="txn-amount" [class.negative]="txn.type === 'debit'">{{ txn.type === 'debit' ? '-' : '+' }}{{ formatCurrency(txn.amount, txn.currency) }}</span>
+            <span class="txn-status" [class]="getTxnStatusClass(txn.status)">{{ txn.status }}</span>
+          </div>
+        </div>
+        <div class="pagination" *ngIf="transactionsTotal > transactionsPageSize">
+          <button (click)="changePage(-1)" [disabled]="transactionsPage === 0"><mat-icon>chevron_left</mat-icon></button>
+          <span>Page {{ transactionsPage + 1 }} of {{ Math.ceil(transactionsTotal / transactionsPageSize) }}</span>
+          <button (click)="changePage(1)" [disabled]="(transactionsPage + 1) * transactionsPageSize >= transactionsTotal"><mat-icon>chevron_right</mat-icon></button>
+        </div>
+      </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Statements">
+      <ng-template matTabContent>
+      <div class="tab-pane">
+        <div class="statements-list">
+          <div class="stmt-card" *ngFor="let stmt of statements; trackBy: trackByStmtId">
+            <div class="stmt-left">
+              <div class="stmt-month">{{ stmt.statementMonth }} {{ stmt.statementYear }}</div>
+              <div class="stmt-details">
+                <span>Due: {{ formatDate(stmt.dueDate) }}</span>
+                <span>Min Payment: {{ formatCurrency(stmt.minimumDue) }}</span>
+                <span>Total: {{ formatCurrency(stmt.totalDue) }}</span>
+              </div>
+            </div>
+            <div class="stmt-right">
+              <span class="stmt-status" [class]="getStatementStatusClass(stmt.status)">{{ stmt.status }}</span>
+              <span class="stmt-paid">Paid: {{ formatCurrency(stmt.paidAmount) }}</span>
+              <button class="stmt-download" matTooltip="Download Statement"><mat-icon>download</mat-icon></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab label="Settings">
+      <ng-template matTabContent>
+      <div class="tab-pane settings-tab">
+        <div class="settings-grid">
+          <div class="setting-card">
+            <h3 class="card-section-title">Card Controls</h3>
+            <div class="setting-item">
+              <div class="setting-info"><span class="setting-label">Freeze Card</span><span class="setting-desc">Temporarily block transactions</span></div>
+              <mat-slide-toggle [checked]="card.isFrozen" (change)="toggleFreeze()" color="primary"></mat-slide-toggle>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info"><span class="setting-label">Report Lost/Stolen</span><span class="setting-desc">Permanently block this card</span></div>
+              <button class="btn-danger-sm" (click)="reportLostStolen()">Report</button>
+            </div>
+          </div>
+          <div class="setting-card">
+            <h3 class="card-section-title">Payment Preferences</h3>
+            <div class="setting-item">
+              <div class="setting-info"><span class="setting-label">Auto-Pay</span><span class="setting-desc">Automatically pay minimum due</span></div>
+              <mat-slide-toggle [checked]="card.autoPayEnabled" (change)="toggleAutoPay()" color="primary"></mat-slide-toggle>
+            </div>
+            <div class="setting-item">
+              <div class="setting-info"><span class="setting-label">Transaction Alerts</span><span class="setting-desc">Get notified on each transaction</span></div>
+              <mat-slide-toggle [checked]="card.transactionAlertsEnabled" (change)="toggleAlerts()" color="primary"></mat-slide-toggle>
+            </div>
+          </div>
+          <div class="setting-card full-width">
+            <h3 class="card-section-title">Card Details</h3>
+            <div class="card-details-grid">
+              <div class="cd-item"><span class="cd-label">Card Number</span><span class="cd-value mono">{{ maskNumber(card.cardNumber) }} <button class="cd-toggle" (click)="showFullNumber = !showFullNumber"><mat-icon>visibility</mat-icon></button></span></div>
+              <div class="cd-item"><span class="cd-label">Expiry Date</span><span class="cd-value">{{ card.expiryDate }}</span></div>
+              <div class="cd-item"><span class="cd-label">CVV</span><span class="cd-value">{{ showCvv ? card.cvv : '***' }} <button class="cd-toggle" (click)="showCvv = !showCvv"><mat-icon>visibility</mat-icon></button></span></div>
+              <div class="cd-item"><span class="cd-label">Card Network</span><span class="cd-value">{{ cardNetworkLabels[card.cardNetwork] }}</span></div>
+              <div class="cd-item"><span class="cd-label">Card Type</span><span class="cd-value">{{ cardTypeLabels[card.cardType] }}</span></div>
+              <div class="cd-item"><span class="cd-label">Status</span><span class="cd-value"><span class="status-badge-sm" [class]="getStatusClass(card.status)">{{ card.isFrozen ? 'Frozen' : cardStatusLabels[card.status] }}</span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<div class="loading-state" *ngIf="!card && !error">
+  <div class="spinner"></div>
+  <p>Loading card details...</p>
+</div>
+
+<div class="error-state" *ngIf="error">
+  <mat-icon class="error-icon">error_outline</mat-icon>
+  <h3>Card Not Found</h3>
+  <p>{{ error }}</p>
+  <button class="btn-primary" routerLink="/cards" style="width:auto;padding:12px 28px!important">
+    <mat-icon>arrow_back</mat-icon> Back to Cards
+  </button>
+</div>

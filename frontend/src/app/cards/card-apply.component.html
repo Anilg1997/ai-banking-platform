@@ -1,0 +1,226 @@
+<div class="card-apply-page animate-fade-in">
+  <div class="apply-header">
+    <button class="back-btn" routerLink="/cards" matTooltip="Back to Cards">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="header-text">
+      <h1 class="page-title">Apply for a Card</h1>
+      <p class="page-subtitle">Choose the perfect card for your needs</p>
+    </div>
+  </div>
+
+  <div class="success-screen animate-fade-in-up" *ngIf="submitted">
+    <div class="success-icon"><mat-icon>check_circle</mat-icon></div>
+    <h2>Application Submitted!</h2>
+    <p>Your application reference number:</p>
+    <div class="ref-number">{{ applicationRef }}</div>
+    <p class="success-info">Expected processing time: 2-3 business days. You will be notified via email once approved.</p>
+    <div class="success-actions">
+      <button class="btn-primary" routerLink="/cards" style="width:auto;padding:12px 28px!important">
+        <mat-icon>credit_card</mat-icon> Back to Cards
+      </button>
+      <button class="btn-secondary" routerLink="/dashboard" style="width:auto;padding:12px 28px!important">
+        Go to Dashboard
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!submitted">
+    <div class="progress-bar">
+      <div class="progress-steps">
+        <div class="progress-step" *ngFor="let step of [1,2,3,4]; let i = index"
+             [class.active]="currentStep >= step" [class.current]="currentStep === step"
+             (click)="goToStep(step)">
+          <div class="step-circle">{{ step }}</div>
+          <span class="step-label">{{ i === 0 ? 'Select Card' : i === 1 ? 'Personal Info' : i === 2 ? 'KYC Details' : 'Review' }}</span>
+        </div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" [style.width.%]="getProgressPercent()"></div>
+      </div>
+    </div>
+
+    <div class="apply-content">
+      <div class="form-section animate-fade-in-up">
+        <div *ngIf="currentStep === 1">
+          <h2 class="form-title">Select Your Card</h2>
+          <p class="form-subtitle">Choose a card type and network that suits your lifestyle</p>
+          <div class="card-options-grid">
+            <div class="card-option" *ngFor="let opt of cardOptions; trackBy: trackByOption"
+                 [class.selected]="selectedOption === opt" (click)="selectCard(opt)">
+              <div class="opt-card-preview" [style.background]="getCardGradient(opt.network)">
+                <div class="opt-chip"><div class="opt-chip-inner"></div></div>
+                <div class="opt-network">{{ cardNetworkLabels[opt.network] }}</div>
+                <div class="opt-type">{{ cardTypeLabels[opt.type] }}</div>
+              </div>
+              <div class="opt-details">
+                <h4 class="opt-name">{{ opt.label }}</h4>
+                <ul class="opt-benefits">
+                  <li *ngFor="let b of opt.benefits">{{ b }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="currentStep === 2">
+          <h2 class="form-title">Personal Information</h2>
+          <p class="form-subtitle">Fill in your personal details</p>
+          <div class="apply-form">
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>First Name</label>
+                <input class="form-input" [(ngModel)]="personalInfo.firstName" placeholder="First name" />
+              </div>
+              <div class="form-group flex-1">
+                <label>Last Name</label>
+                <input class="form-input" [(ngModel)]="personalInfo.lastName" placeholder="Last name" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>Email</label>
+                <input class="form-input" type="email" [(ngModel)]="personalInfo.email" placeholder="Email address" />
+              </div>
+              <div class="form-group flex-1">
+                <label>Phone</label>
+                <input class="form-input" [(ngModel)]="personalInfo.phone" placeholder="Phone number" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>Employment Type</label>
+                <select class="form-input" [(ngModel)]="personalInfo.employmentType">
+                  <option value="" disabled>Select employment type</option>
+                  <option *ngFor="let et of employmentTypes" [value]="et">{{ et }}</option>
+                </select>
+              </div>
+              <div class="form-group flex-1">
+                <label>Employer Name</label>
+                <input class="form-input" [(ngModel)]="personalInfo.employerName" placeholder="Employer name" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>Designation</label>
+                <input class="form-input" [(ngModel)]="personalInfo.designation" placeholder="Your designation" />
+              </div>
+              <div class="form-group flex-1">
+                <label>Annual Income (USD)</label>
+                <input class="form-input" type="number" [(ngModel)]="personalInfo.annualIncome" placeholder="Annual income" min="0" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="currentStep === 3">
+          <h2 class="form-title">KYC Details</h2>
+          <p class="form-subtitle">Identity verification information</p>
+          <div class="apply-form">
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>Aadhar Number</label>
+                <input class="form-input" [(ngModel)]="kycInfo.aadharNumber" placeholder="XXXX XXXX XXXX" maxlength="14" />
+              </div>
+              <div class="form-group flex-1">
+                <label>PAN Number</label>
+                <input class="form-input" [(ngModel)]="kycInfo.panNumber" placeholder="ABCDE1234F" maxlength="10" style="text-transform:uppercase" />
+              </div>
+            </div>
+            <div class="form-group full">
+              <label>Address Line 1</label>
+              <input class="form-input" [(ngModel)]="kycInfo.addressLine1" placeholder="House / Flat number, Street" />
+            </div>
+            <div class="form-group full">
+              <label>Address Line 2</label>
+              <input class="form-input" [(ngModel)]="kycInfo.addressLine2" placeholder="Area, Locality" />
+            </div>
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>City</label>
+                <input class="form-input" [(ngModel)]="kycInfo.city" placeholder="City" />
+              </div>
+              <div class="form-group flex-1">
+                <label>State</label>
+                <input class="form-input" [(ngModel)]="kycInfo.state" placeholder="State" />
+              </div>
+              <div class="form-group flex-1">
+                <label>Pincode</label>
+                <input class="form-input" [(ngModel)]="kycInfo.pincode" placeholder="Pincode" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="currentStep === 4">
+          <h2 class="form-title">Review &amp; Submit</h2>
+          <p class="form-subtitle">Please review your application before submitting</p>
+          <div class="review-section">
+            <div class="review-card">
+              <h4>Selected Card</h4>
+              <div class="review-mini-card" *ngIf="selectedOption" [style.background]="getCardGradient(selectedOption.network)">
+                <span class="mini-network">{{ cardNetworkLabels[selectedOption.network] }}</span>
+                <span class="mini-type">{{ cardTypeLabels[selectedOption.type] }}</span>
+              </div>
+              <p>{{ selectedOption?.label }}</p>
+            </div>
+            <div class="review-card">
+              <h4>Personal Information</h4>
+              <div class="review-row"><span>Name</span><span>{{ personalInfo.firstName }} {{ personalInfo.lastName }}</span></div>
+              <div class="review-row"><span>Email</span><span>{{ personalInfo.email }}</span></div>
+              <div class="review-row"><span>Phone</span><span>{{ personalInfo.phone || '-' }}</span></div>
+              <div class="review-row"><span>Employment</span><span>{{ personalInfo.employmentType }}</span></div>
+              <div class="review-row"><span>Employer</span><span>{{ personalInfo.employerName || '-' }}</span></div>
+              <div class="review-row"><span>Annual Income</span><span>{{ personalInfo.annualIncome ? formatCurrency(personalInfo.annualIncome) : '-' }}</span></div>
+            </div>
+            <div class="review-card">
+              <h4>KYC Details</h4>
+              <div class="review-row"><span>Aadhar</span><span>{{ kycInfo.aadharNumber }}</span></div>
+              <div class="review-row"><span>PAN</span><span>{{ kycInfo.panNumber }}</span></div>
+              <div class="review-row"><span>Address</span><span>{{ kycInfo.addressLine1 }}{{ kycInfo.addressLine2 ? ', ' + kycInfo.addressLine2 : '' }}</span></div>
+              <div class="review-row"><span>City</span><span>{{ kycInfo.city }}</span></div>
+              <div class="review-row"><span>State</span><span>{{ kycInfo.state }}</span></div>
+              <div class="review-row"><span>Pincode</span><span>{{ kycInfo.pincode }}</span></div>
+            </div>
+          </div>
+          <div class="terms-section">
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="agreeTerms" />
+              <span class="checkbox-text">I confirm that all the information provided is accurate and I agree to the <a href="#" class="terms-link">Terms &amp; Conditions</a> and <a href="#" class="terms-link">Privacy Policy</a>.</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-navigation">
+          <button class="btn-cancel" *ngIf="currentStep > 1" (click)="prevStep()">
+            <mat-icon>arrow_back</mat-icon> Previous
+          </button>
+          <button class="btn-primary" *ngIf="currentStep < totalSteps" (click)="nextStep()" [disabled]="!canProceed()" style="width:auto;padding:12px 28px!important;margin-left:auto">
+            Next <mat-icon>arrow_forward</mat-icon>
+          </button>
+          <button class="btn-primary" *ngIf="currentStep === totalSteps" (click)="submit()" [disabled]="!canProceed() || isSubmitting" style="width:auto;padding:12px 28px!important;margin-left:auto">
+            <span *ngIf="!isSubmitting"><mat-icon>check_circle</mat-icon> Submit Application</span>
+            <span *ngIf="isSubmitting"><span class="spinner-btn"></span> Submitting...</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="benefits-sidebar hide-mobile" *ngIf="currentStep === 1">
+        <h3 class="sidebar-title">Card Benefits</h3>
+        <div class="benefit-info" *ngIf="selectedOption; else noSelection">
+          <h4>{{ selectedOption.label }}</h4>
+          <ul>
+            <li *ngFor="let b of selectedOption.benefits">{{ b }}</li>
+          </ul>
+          <div class="benefit-note">Plus exclusive rewards, 24/7 customer support, and fraud protection.</div>
+        </div>
+        <ng-template #noSelection>
+          <div class="benefit-info placeholder">
+            <mat-icon>touch_app</mat-icon>
+            <p>Select a card option to see its benefits</p>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ng-container>
+</div>

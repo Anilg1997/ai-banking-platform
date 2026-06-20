@@ -1,0 +1,104 @@
+<div class="admin-users-page animate-fade-in">
+  <div class="page-header">
+    <div class="header-left">
+      <button class="back-btn" routerLink="/admin" matTooltip="Back to Admin Dashboard">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-text">
+        <h1 class="page-title">User Management</h1>
+        <p class="page-subtitle">Manage registered users, roles, and account status</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-summary">
+    <div class="stat-chip">
+      <span class="chip-value">{{ users.length }}</span>
+      <span class="chip-label">Total Users</span>
+    </div>
+    <div class="stat-chip">
+      <span class="chip-value active">{{ activeCount }}</span>
+      <span class="chip-label">Active</span>
+    </div>
+    <div class="stat-chip">
+      <span class="chip-value locked">{{ lockedCount }}</span>
+      <span class="chip-label">Locked</span>
+    </div>
+    <div class="stat-chip">
+      <span class="chip-value verified">{{ verifiedCount }}</span>
+      <span class="chip-label">Verified</span>
+    </div>
+  </div>
+
+  <div class="users-card">
+    <div class="filters-bar">
+      <div class="search-box">
+        <mat-icon>search</mat-icon>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search by name or email..."
+          [(ngModel)]="searchQuery"
+          (input)="applyFilters()"
+        />
+      </div>
+      <div class="role-filter">
+        <span class="filter-label">Role:</span>
+        <select class="filter-select" [(ngModel)]="selectedRole" (change)="applyFilters()">
+          <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="users-table">
+      <div class="table-header">
+        <span class="col-name">Name</span>
+        <span class="col-email">Email</span>
+        <span class="col-role">Role</span>
+        <span class="col-status">Status</span>
+        <span class="col-verified">Verified</span>
+        <span class="col-actions">Actions</span>
+      </div>
+      <div class="table-row" *ngFor="let user of filteredUsers">
+        <span class="col-name">
+          <div class="user-avatar">{{ user.firstName[0] }}{{ user.lastName[0] }}</div>
+          <div class="user-name-info">
+            <span class="user-fullname">{{ user.firstName }} {{ user.lastName }}</span>
+            <span class="user-joined">{{ formatDate(user.createdAt) }}</span>
+          </div>
+        </span>
+        <span class="col-email">{{ user.email }}</span>
+        <span class="col-role">
+          <select class="role-select" [class]="getRoleBadgeClass(user.role)" [(ngModel)]="user.role" (change)="updateRole(user.id, user.role)">
+            <option *ngFor="let r of editableRoles" [value]="r">{{ r }}</option>
+          </select>
+        </span>
+        <span class="col-status">
+          <span class="status-badge" [class]="getStatusBadgeClass(user.status)">
+            {{ user.status }}
+          </span>
+        </span>
+        <span class="col-verified">
+          <mat-icon class="verified-yes" *ngIf="user.emailVerified">check_circle</mat-icon>
+          <mat-icon class="verified-no" *ngIf="!user.emailVerified">cancel</mat-icon>
+        </span>
+        <span class="col-actions">
+          <button class="action-icon-btn" matTooltip="Toggle Active/Locked" (click)="toggleStatus(user.id, user.status)">
+            <mat-icon>{{ user.status === 'Active' ? 'lock_outline' : 'lock_open' }}</mat-icon>
+          </button>
+          <button class="action-icon-btn" matTooltip="View Details">
+            <mat-icon>visibility</mat-icon>
+          </button>
+        </span>
+      </div>
+      <div class="empty-row" *ngIf="filteredUsers.length === 0">
+        <mat-icon>search_off</mat-icon>
+        <span>No users match your search</span>
+      </div>
+    </div>
+
+    <div class="table-footer">
+      <span class="footer-count">Showing {{ filteredUsers.length }} of {{ users.length }} users</span>
+    </div>
+  </div>
+</div>

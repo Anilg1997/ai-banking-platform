@@ -1,0 +1,220 @@
+<div class="admin-dashboard-page animate-fade-in">
+  <header class="dashboard-header">
+    <div class="welcome-section">
+      <div class="welcome-text">
+        <h1 class="welcome-title">Admin Dashboard</h1>
+        <p class="welcome-subtitle">System overview and management at a glance</p>
+      </div>
+      <div class="header-actions">
+        <button class="action-btn primary" (click)="navigateTo('/admin/users')" matTooltip="Manage Users">
+          <mat-icon>people</mat-icon>
+          <span>View Users</span>
+        </button>
+        <button class="action-btn" (click)="navigateTo('/admin/cards')" matTooltip="Card Applications">
+          <mat-icon>credit_card</mat-icon>
+          <span>Applications</span>
+        </button>
+        <button class="action-btn" (click)="navigateTo('/admin/agent')" matTooltip="Agent Monitor">
+          <mat-icon>smart_toy</mat-icon>
+          <span>Agent Monitor</span>
+        </button>
+        <button class="action-btn" (click)="navigateTo('/admin/settings')" matTooltip="System Settings">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="quick-stats">
+      <div class="stat-card animate-slide-in">
+        <div class="stat-icon balance">
+          <mat-icon>people</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Total Users</span>
+          <span class="stat-value">{{ stats.totalUsers.toLocaleString() }}</span>
+          <span class="stat-change positive">{{ stats.activeUsers.toLocaleString() }} active</span>
+        </div>
+      </div>
+      <div class="stat-card animate-slide-in" style="animation-delay: 0.1s">
+        <div class="stat-icon income">
+          <mat-icon>person_check</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Active Users</span>
+          <span class="stat-value">{{ stats.activeUsers.toLocaleString() }}</span>
+          <span class="stat-change positive">{{ (stats.activeUsers / stats.totalUsers * 100).toFixed(1) }}% of total</span>
+        </div>
+      </div>
+      <div class="stat-card animate-slide-in" style="animation-delay: 0.2s">
+        <div class="stat-icon expense">
+          <mat-icon>credit_card</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Total Cards</span>
+          <span class="stat-value">{{ stats.totalCards.toLocaleString() }}</span>
+          <span class="stat-change">{{ stats.creditLimitUsage }}% limit usage</span>
+        </div>
+      </div>
+      <div class="stat-card animate-slide-in" style="animation-delay: 0.3s">
+        <div class="stat-icon savings">
+          <mat-icon>smart_toy</mat-icon>
+        </div>
+        <div class="stat-info">
+          <span class="stat-label">Agent Conversations</span>
+          <span class="stat-value">{{ stats.agentConversations.toLocaleString() }}</span>
+          <span class="stat-change positive">{{ agentStats.activeConversations }} active now</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="dashboard-grid">
+    <div class="dashboard-card activity-card">
+      <div class="card-header">
+        <h2 class="card-title">
+          <mat-icon>timeline</mat-icon>
+          Recent Activity
+        </h2>
+      </div>
+      <div class="activity-list">
+        <div class="activity-item" *ngFor="let act of recentActivity">
+          <div class="activity-icon" [class]="getActivityColor(act.type)">
+            <mat-icon>{{ getActivityIcon(act.type) }}</mat-icon>
+          </div>
+          <div class="activity-info">
+            <span class="activity-message">{{ act.message }}</span>
+            <span class="activity-time">{{ act.time }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card charts-card">
+      <div class="card-header">
+        <h2 class="card-title">
+          <mat-icon>bar_chart</mat-icon>
+          System Overview
+        </h2>
+      </div>
+      <div class="charts-content">
+        <div class="chart-section">
+          <span class="chart-label">User Growth</span>
+          <div class="bar-chart">
+            <div class="bar-item">
+              <span class="bar-label">Jan</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 65%"></div></div>
+            </div>
+            <div class="bar-item">
+              <span class="bar-label">Feb</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 70%"></div></div>
+            </div>
+            <div class="bar-item">
+              <span class="bar-label">Mar</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 78%"></div></div>
+            </div>
+            <div class="bar-item">
+              <span class="bar-label">Apr</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 72%"></div></div>
+            </div>
+            <div class="bar-item">
+              <span class="bar-label">May</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 85%"></div></div>
+            </div>
+            <div class="bar-item">
+              <span class="bar-label">Jun</span>
+              <div class="bar-track"><div class="bar-fill" style="height: 92%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-section">
+          <span class="chart-label">Card Type Distribution</span>
+          <div class="horizontal-bars">
+            <div class="hbar-item">
+              <span class="hbar-label">VISA</span>
+              <div class="hbar-track"><div class="hbar-fill visa" style="width: 55%"><span>55%</span></div></div>
+            </div>
+            <div class="hbar-item">
+              <span class="hbar-label">Mastercard</span>
+              <div class="hbar-track"><div class="hbar-fill mastercard" style="width: 30%"><span>30%</span></div></div>
+            </div>
+            <div class="hbar-item">
+              <span class="hbar-label">AMEX</span>
+              <div class="hbar-track"><div class="hbar-fill amex" style="width: 15%"><span>15%</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card applications-card">
+      <div class="card-header">
+        <h2 class="card-title">
+          <mat-icon>description</mat-icon>
+          Recent Card Applications
+        </h2>
+        <button class="card-action" (click)="navigateTo('/admin/cards')" matTooltip="View all applications">
+          View All <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="applications-table">
+        <div class="app-table-header">
+          <span class="app-col applicant">Applicant</span>
+          <span class="app-col type">Card Type</span>
+          <span class="app-col income">Income</span>
+          <span class="app-col status">Status</span>
+        </div>
+        <div class="app-table-row" *ngFor="let app of recentApplications">
+          <span class="app-col applicant">{{ app.applicant }}</span>
+          <span class="app-col type">{{ app.cardType }}</span>
+          <span class="app-col income">{{ formatCurrency(app.amount) }}</span>
+          <span class="app-col status"><span class="status-badge pending">{{ app.status }}</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card actions-card">
+      <div class="card-header">
+        <h2 class="card-title">
+          <mat-icon>history</mat-icon>
+          Recent Admin Actions
+        </h2>
+      </div>
+      <div class="actions-list">
+        <div class="action-item" *ngFor="let act of recentActions">
+          <div class="action-dot"></div>
+          <div class="action-info">
+            <span class="action-text">{{ act.action }}</span>
+            <span class="action-target">{{ act.target }}</span>
+            <span class="action-time">{{ act.timestamp }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card quick-actions-card">
+      <h2 class="card-title">
+        <mat-icon>flash_on</mat-icon>
+        Quick Actions
+      </h2>
+      <div class="actions-grid">
+        <button class="quick-action-btn" (click)="navigateTo('/admin/users')">
+          <div class="qa-icon"><mat-icon>people</mat-icon></div>
+          <span>View Users</span>
+        </button>
+        <button class="quick-action-btn" (click)="navigateTo('/admin/cards')">
+          <div class="qa-icon"><mat-icon>credit_card</mat-icon></div>
+          <span>Card Applications</span>
+        </button>
+        <button class="quick-action-btn" (click)="navigateTo('/admin/agent')">
+          <div class="qa-icon"><mat-icon>smart_toy</mat-icon></div>
+          <span>Agent Monitor</span>
+        </button>
+        <button class="quick-action-btn" (click)="navigateTo('/admin/settings')">
+          <div class="qa-icon"><mat-icon>settings</mat-icon></div>
+          <span>System Settings</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
